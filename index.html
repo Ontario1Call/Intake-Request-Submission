@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Guide — M365 + Fabric Platform</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg:       #f7f5f0;
+  --surface:  #ffffff;
+  --surface2: #f0ede5;
+  --surface3: #e8e4da;
+  --border:   #ddd9ce;
+  --border2:  #c8c3b5;
+  --ink:      #1c1a16;
+  --ink2:     #3d3a32;
+  --ink3:     #7a7568;
+  --ink4:     #aca79a;
+  --ink5:     #c8c3b5;
+
+  --green:    #2a7a4f;
+  --green-bg: #edf7f2;
+  --green-bd: #a8d9be;
+
+  --amber:    #b06a00;
+  --amber-bg: #fef7ec;
+  --amber-bd: #f0cfa0;
+
+  --blue:     #1a5cb0;
+  --blue-bg:  #edf3fc;
+  --blue-bd:  #a8c4f0;
+
+  --rose:     #b02a2a;
+  --rose-bg:  #fcedf0;
+  --rose-bd:  #f0a8b4;
+
+  --purple:   #5a3ab0;
+  --purple-bg:#f2eeff;
+  --purple-bd:#c4a8f0;
+
+  --accent:   #2a7a4f;   /* primary accent = green (chosen option) */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; line-height: 1.65; }
+
+/* ═══ TOP NAV TABS ═══ */
+.tab-bar {
+  background: var(--ink);
+  display: flex; align-items: stretch;
+  padding: 0 0 0 0;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+.tab-logo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 28px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  font-family: 'Fraunces', serif;
+  font-size: 14px; font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+}
+.tab-logo span { color: var(--green); }
+.tab-nav { display: flex; flex: 1; overflow-x: auto; }
+.tab-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 0 22px; height: 52px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer; border: none; background: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap; transition: all 0.18s;
+  text-transform: uppercase;
+}
+.tab-btn:hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.04); }
+.tab-btn.active { color: #fff; border-bottom-color: var(--green); background: rgba(42,122,79,0.12); }
+.tab-btn .tb-num {
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px; padding: 1px 6px;
+  font-size: 10px; color: rgba(255,255,255,0.3);
+}
+.tab-btn.active .tb-num { background: rgba(42,122,79,0.3); color: var(--green); }
+
+/* ═══ TAB PANELS ═══ */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ═══ PANEL HEADER ═══ */
+.panel-header {
+  padding: 52px 56px 44px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.panel-header::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green) 0%, transparent 60%);
+}
+.ph-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink4); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ph-kicker::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ink4); }
+.panel-header h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(26px, 3.5vw, 46px);
+  font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.025em; margin-bottom: 10px;
+}
+.panel-header p { color: var(--ink3); font-size: 14px; max-width: 620px; font-weight: 300; }
+
+/* ═══ CHOSEN BADGE ═══ */
+.chosen-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green-bg); border: 1px solid var(--green-bd);
+  color: var(--green); padding: 6px 14px; border-radius: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+  margin-top: 16px;
+}
+
+/* ═══ LAYOUT ═══ */
+.layout { display: flex; max-width: 1200px; margin: 0 auto; }
+.sidebar {
+  width: 216px; flex-shrink: 0;
+  padding: 28px 0 40px 20px;
+  position: sticky; top: 52px; height: calc(100vh - 52px);
+  overflow-y: auto; border-right: 1px solid var(--border);
+}
+.sb-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink5); margin-bottom: 8px; padding-left: 8px;
+}
+.sb-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px; border-radius: 6px;
+  font-size: 12.5px; color: var(--ink3); cursor: pointer;
+  transition: all 0.14s; margin-bottom: 1px; text-decoration: none;
+}
+.sb-item:hover { background: var(--surface2); color: var(--ink); }
+.sb-item.active { background: var(--green-bg); color: var(--green); font-weight: 500; }
+.sb-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border2); flex-shrink: 0; }
+.sb-item.active .sb-dot { background: var(--green); }
+
+.main { flex: 1; padding: 36px 44px 80px 36px; min-width: 0; }
+
+/* ═══ PROGRESS ═══ */
+.prog-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 32px;
+}
+.prog-label { font-size: 12px; color: var(--ink3); white-space: nowrap; }
+.prog-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--green); border-radius: 2px; width: 0%; transition: width 0.3s; }
+.prog-pct { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--green); }
+
+/* ═══ PHASE ═══ */
+.phase { margin-bottom: 48px; }
+.phase-hdr {
+  display: flex; align-items: baseline; gap: 12px;
+  border-bottom: 2px solid var(--ink); padding-bottom: 10px; margin-bottom: 18px;
+}
+.ph-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink4); letter-spacing: 0.12em; }
+.ph-title { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+.ph-tag {
+  margin-left: auto; font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 4px; border: 1px solid;
+}
+.pht-green  { color: var(--green);  background: var(--green-bg);  border-color: var(--green-bd); }
+.pht-blue   { color: var(--blue);   background: var(--blue-bg);   border-color: var(--blue-bd); }
+.pht-amber  { color: var(--amber);  background: var(--amber-bg);  border-color: var(--amber-bd); }
+.pht-rose   { color: var(--rose);   background: var(--rose-bg);   border-color: var(--rose-bd); }
+.pht-purple { color: var(--purple); background: var(--purple-bg); border-color: var(--purple-bd); }
+
+/* ═══ STEP CARD ═══ */
+.step-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; margin-bottom: 10px; overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.step-card:hover { border-color: var(--border2); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.step-hdr {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; cursor: pointer; user-select: none;
+}
+.snum {
+  width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500;
+  margin-top: 1px; border: 1px solid;
+}
+.sn-g { color: var(--green);  background: var(--green-bg);  border-color: var(--green-bd); }
+.sn-b { color: var(--blue);   background: var(--blue-bg);   border-color: var(--blue-bd); }
+.sn-a { color: var(--amber);  background: var(--amber-bg);  border-color: var(--amber-bd); }
+.sn-r { color: var(--rose);   background: var(--rose-bg);   border-color: var(--rose-bd); }
+.sn-p { color: var(--purple); background: var(--purple-bg); border-color: var(--purple-bd); }
+
+.smeta { flex: 1; min-width: 0; }
+.stool { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: var(--ink4); margin-bottom: 2px; }
+.stitle { font-size: 14px; font-weight: 600; color: var(--ink); }
+.sdesc  { font-size: 12.5px; color: var(--ink3); margin-top: 2px; }
+.schev  { color: var(--ink4); font-size: 13px; flex-shrink: 0; margin-top: 5px; transition: transform 0.2s; }
+.step-card.open .schev { transform: rotate(180deg); }
+.sbody { display: none; padding: 0 16px 16px 56px; border-top: 1px solid var(--border); }
+.sbody.visible { display: block; }
+
+/* ═══ CHECKLIST ═══ */
+.cl { list-style: none; margin-top: 12px; }
+.cl li { display: flex; gap: 9px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 13px; color: var(--ink2); }
+.cl li:last-child { border: none; }
+.cbox {
+  width: 17px; height: 17px; border-radius: 4px;
+  border: 1.5px solid var(--border2); flex-shrink: 0; margin-top: 2px;
+  cursor: pointer; transition: all 0.14s;
+  display: flex; align-items: center; justify-content: center; font-size: 9px;
+}
+.cbox:hover { border-color: var(--green); }
+.cbox.checked { background: var(--green); border-color: var(--green); color: white; }
+.ctext { flex: 1; }
+.ctext strong { color: var(--ink); font-weight: 600; }
+
+/* ═══ NOTE ═══ */
+.note {
+  margin-top: 12px; padding: 10px 13px; border-radius: 7px;
+  font-size: 12.5px; display: flex; gap: 9px; align-items: flex-start;
+}
+.note.tip    { background: var(--blue-bg);   border-left: 3px solid var(--blue);   color: #1a3a74; }
+.note.warn   { background: var(--amber-bg);  border-left: 3px solid var(--amber);  color: #7a4400; }
+.note.ok     { background: var(--green-bg);  border-left: 3px solid var(--green);  color: #1a4a30; }
+.note.purple { background: var(--purple-bg); border-left: 3px solid var(--purple); color: #32186e; }
+.note p { margin: 0; }
+
+code {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--rose); font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px; padding: 1px 5px; border-radius: 3px;
+}
+
+/* ═══ DATA TABLE ═══ */
+.dt { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12.5px; }
+.dt th { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); padding: 7px 10px; border-bottom: 2px solid var(--border); text-align: left; }
+.dt td { padding: 8px 10px; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--ink2); vertical-align: top; }
+.dt tr:last-child td { border: none; }
+.dt td:first-child { color: var(--ink); font-weight: 500; }
+
+
+/* ══════════════════════════════════════
+   COLLABORATION FLOW TAB
+══════════════════════════════════════ */
+.collab-section { max-width: 1100px; margin: 0 auto; padding: 40px 44px 80px; }
+
+.swim-wrap { margin-bottom: 56px; }
+.swim-title {
+  font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+  letter-spacing: -0.02em; margin-bottom: 4px;
+}
+.swim-sub { font-size: 13px; color: var(--ink3); margin-bottom: 24px; }
+
+/* swimlane */
+.swimlane { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.sl-header {
+  display: grid; align-items: center;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 0;
+}
+.sl-role {
+  padding: 12px 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 500; border-right: 1px solid var(--border);
+}
+.sl-pm    { color: var(--blue);  background: var(--blue-bg); }
+.sl-de    { color: var(--green); background: var(--green-bg); }
+.sl-shared{ color: var(--purple);background: var(--purple-bg); }
+
+.sl-row { display: grid; }
+.sl-cell {
+  padding: 20px; border-right: 1px solid var(--border);
+  min-height: 80px;
+}
+.sl-cell:last-child { border-right: none; }
+.sl-cell.pm-cell    { background: rgba(26,92,176,0.03); }
+.sl-cell.de-cell    { background: rgba(42,122,79,0.03); }
+.sl-cell.sh-cell    { background: rgba(90,58,176,0.03); }
+.sl-cell.empty      { background: var(--surface2); }
+
+.flow-step {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 13px; margin-bottom: 8px;
+  font-size: 12.5px;
+}
+.flow-step:last-child { margin-bottom: 0; }
+.fs-num {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  letter-spacing: 0.1em; color: var(--ink4); margin-bottom: 3px;
+}
+.fs-title { font-weight: 600; color: var(--ink); font-size: 13px; }
+.fs-body  { color: var(--ink3); font-size: 12px; margin-top: 3px; }
+
+.arrow-down {
+  text-align: center; color: var(--ink4); font-size: 20px;
+  padding: 4px 0; line-height: 1;
+}
+
+/* handoff badge */
+.handoff {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 16px; margin: 8px 0;
+  font-size: 12.5px;
+}
+.ho-icon { font-size: 16px; flex-shrink: 0; }
+.ho-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--ink4); letter-spacing: 0.1em; }
+.ho-title { font-weight: 600; color: var(--ink); font-size: 13px; }
+.ho-desc  { color: var(--ink3); font-size: 12px; }
+
+/* ════════════════════════
+   DATA FLOW / LAYERS
+════════════════════════ */
+.dataflow-wrap { margin-bottom: 56px; }
+.layer-stack { display: flex; flex-direction: column; gap: 3px; margin-top: 24px; }
+
+.layer {
+  display: grid; grid-template-columns: 140px 1fr;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s;
+}
+.layer:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.08); }
+.layer-label {
+  padding: 18px 16px;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid var(--border);
+}
+.ll-tag {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;
+}
+.ll-name { font-weight: 600; font-size: 13px; }
+.layer-body {
+  padding: 16px 20px;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+}
+.layer-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border-radius: 6px;
+  font-size: 12px; font-weight: 500; border: 1px solid;
+}
+.lc-icon { font-size: 13px; }
+.layer-desc { width: 100%; font-size: 12px; color: var(--ink3); margin-top: 4px; }
+.layer-arrow { text-align: center; color: var(--green); font-size: 18px; padding: 4px 0; line-height: 1; }
+
+/* layer colours */
+.l-ui      { background: #f0f4ff; }
+.l-ui .layer-label { background: #e8eeff; }
+.l-ui .ll-tag { color: var(--blue); }
+.l-ui .layer-chip { background: #eef2ff; border-color: #c0ccf8; color: var(--blue); }
+
+.l-pa      { background: #f5f2ff; }
+.l-pa .layer-label { background: #ede8ff; }
+.l-pa .ll-tag { color: var(--purple); }
+.l-pa .layer-chip { background: #f0ecff; border-color: #c8b8f8; color: var(--purple); }
+
+.l-dv      { background: var(--green-bg); }
+.l-dv .layer-label { background: #dff0e8; }
+.l-dv .ll-tag { color: var(--green); }
+.l-dv .layer-chip { background: #eaf6f0; border-color: var(--green-bd); color: var(--green); }
+
+.l-fl      { background: var(--amber-bg); }
+.l-fl .layer-label { background: #fdefd8; }
+.l-fl .ll-tag { color: var(--amber); }
+.l-fl .layer-chip { background: #fef3e2; border-color: var(--amber-bd); color: var(--amber); }
+
+.l-bi      { background: var(--rose-bg); }
+.l-bi .layer-label { background: #f8dde2; }
+.l-bi .ll-tag { color: var(--rose); }
+.l-bi .layer-chip { background: #fceef1; border-color: var(--rose-bd); color: var(--rose); }
+
+/* ingestion steps */
+.ingest-steps {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  gap: 2px; margin-top: 24px;
+}
+.ingest-step {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 12px; text-align: center;
+  position: relative;
+}
+.ingest-step::after {
+  content: '→'; position: absolute; right: -8px; top: 50%;
+  transform: translateY(-50%); color: var(--ink4); font-size: 14px; z-index: 1;
+  background: var(--bg); padding: 2px;
+}
+.ingest-step:last-child::after { display: none; }
+.is-icon { font-size: 22px; margin-bottom: 6px; }
+.is-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--ink4); letter-spacing: 0.1em; margin-bottom: 3px; }
+.is-title { font-size: 12px; font-weight: 600; color: var(--ink); }
+.is-desc  { font-size: 11px; color: var(--ink3); margin-top: 3px; }
+
+/* ══════════════════════
+   DECISION MATRIX TAB
+══════════════════════ */
+.dm-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 44px 80px; }
+
+.opt-cards {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 14px; margin-bottom: 36px;
+}
+.opt-card {
+  border-radius: 10px; padding: 20px; border: 2px solid;
+  position: relative; overflow: hidden;
+}
+.opt-card.chosen { border-color: var(--green); background: var(--green-bg); }
+.opt-card.not-chosen { border-color: var(--border); background: var(--surface); opacity: 0.8; }
+.oc-crown {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--green); color: white;
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  letter-spacing: 0.08em; padding: 3px 8px; border-radius: 4px;
+}
+.oc-num { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--ink4); letter-spacing: 0.12em; margin-bottom: 6px; }
+.oc-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.oc-stack { font-size: 11px; color: var(--ink3); font-family: 'IBM Plex Mono', monospace; }
+
+/* matrix table */
+.mx-section { margin-bottom: 32px; }
+.mx-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink4); border-bottom: 1px solid var(--border);
+  padding-bottom: 10px; margin-bottom: 0;
+}
+.mxtable { width: 100%; border-collapse: collapse; }
+.mxtable thead th {
+  padding: 11px 14px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); text-align: center;
+  position: sticky; top: 52px; background: var(--bg); z-index: 5;
+}
+.mxtable thead th:first-child { text-align: left; color: var(--ink4); }
+.mth-g { color: var(--green) !important; }
+.mth-a { color: var(--amber) !important; }
+.mth-b { color: var(--blue)  !important; }
+.mxtable tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.12s; }
+.mxtable tbody tr:hover { background: rgba(0,0,0,0.02); }
+.mxtable td { padding: 10px 14px; font-size: 12.5px; color: var(--ink2); text-align: center; }
+.mxtable td:first-child { text-align: left; font-weight: 600; color: var(--ink); font-size: 13px; width: 24%; }
+.mxtable td.chosen-col { background: rgba(42,122,79,0.04); }
+
+.tag-y  { display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:600;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd); }
+.tag-w  { display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:600;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd); }
+.tag-n  { display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:600;background:var(--rose-bg);color:var(--rose);border:1px solid var(--rose-bd); }
+
+.sbar { display:flex;align-items:center;gap:7px;justify-content:center; }
+.strack { width:72px;height:4px;background:var(--border);border-radius:2px;overflow:hidden; }
+.sfill  { height:100%;border-radius:2px; }
+.sval   { font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:32px;text-align:right; }
+
+/* recommendation banner */
+.rec-banner {
+  background: var(--green-bg); border: 1px solid var(--green-bd);
+  border-radius: 10px; padding: 24px 28px;
+  display: flex; gap: 18px; align-items: flex-start; margin-bottom: 32px;
+}
+.rb-icon { font-size: 28px; flex-shrink: 0; }
+.rb-text h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+.rb-text p { font-size: 13px; color: var(--ink2); line-height: 1.7; max-width: 700px; }
+
+@media(max-width:768px){
+  .tab-logo { display: none; }
+  .sidebar { display: none; }
+  .main { padding: 20px 16px 60px; }
+  .panel-header { padding: 32px 20px; }
+  .collab-section, .dm-wrap { padding: 24px 16px 60px; }
+  .opt-cards { grid-template-columns: 1fr; }
+  .ingest-steps { grid-template-columns: 1fr; }
+  .ingest-step::after { display: none; }
+  .layer { grid-template-columns: 100px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TAB BAR ═══ -->
+<div class="tab-bar">
+  <div class="tab-logo">M365 <span>+</span> Fabric</div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('setup')">
+      <span class="tb-num">01</span> PM Setup Guide
+    </button>
+    <button class="tab-btn" onclick="switchTab('collab')">
+      <span class="tb-num">02</span> Collaboration &amp; Data Flow
+    </button>
+    <button class="tab-btn" onclick="switchTab('matrix')">
+      <span class="tb-num">03</span> Architecture Decision
+    </button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════
+     TAB 1 — PM SETUP GUIDE (OPTION 1)
+════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-setup">
+
+  <div class="panel-header">
+    <div class="ph-kicker">PM Getting Started Guide · M365 E5 · Microsoft Fabric</div>
+    <h1>Your M365 + Fabric<br>Intake Platform — Setup Guide</h1>
+    <p>Step-by-step tool setup templated for running multiple projects. Architecture selected based on financial data requirements, M365 E5 licensing, and PM-led team capability. Stack: Power Apps → Dataverse → Fabric zero-copy link → Power BI.</p>
+    <div class="chosen-badge">✓ Selected Architecture — Dataverse + Fabric Zero-Copy Link</div>
+  </div>
+
+  <!-- LICENSE BAR -->
+  <div style="background:var(--surface);border-bottom:1px solid var(--border);padding:0 44px;">
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 0 6px;border-bottom:1px solid var(--border);">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink4);">License Requirements per Platform</span>
+      <span style="font-size:11px;color:var(--ink4);">—</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--green);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span> Included in M365 E5</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--amber);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block;"></span> Requires Add-On / SKU</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--blue);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;"></span> Included in M365 (any plan)</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;padding:14px 0 16px;">
+
+      <!-- Power Apps -->
+      <div style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🎨</span>
+          <span style="font-weight:600;font-size:13px;color:var(--blue);">Power Apps Canvas</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">M365 E5 · Power Apps for M365</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Included in E5. Covers standard connectors + Canvas App creation. No per-app licensing needed for internal users.</div>
+      </div>
+
+      <!-- Power Automate -->
+      <div style="background:var(--purple-bg);border:1px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">⚡</span>
+          <span style="font-weight:600;font-size:13px;color:var(--purple);">Power Automate</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Power Automate (M365 plan)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Standard connectors included in E5. Dataverse trigger is standard. <strong style="color:var(--amber);">HTTP connector requires Premium</strong> — only needed for Option 2 (Fabric Direct). Not required here.</div>
+      </div>
+
+      <!-- Dataverse -->
+      <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🗄️</span>
+          <span style="font-weight:600;font-size:13px;color:var(--green);">Microsoft Dataverse</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">Power Apps for M365 (included in E5)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Dataverse for Teams included in E5. Full Dataverse (standalone) included with Power Apps per-user plan or Power Platform Premium — confirm your E5 bundle level.</div>
+      </div>
+
+      <!-- Microsoft Fabric -->
+      <div style="background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🏗️</span>
+          <span style="font-weight:600;font-size:13px;color:var(--amber);">Microsoft Fabric</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:0.05em;margin-bottom:3px;">Fabric Capacity SKU — F2 minimum</div>
+        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--amber);">Not included in M365 E5.</strong> Requires a separate Fabric capacity SKU: F2 (dev/test) · F4+ (production). Power BI Pro included in E5 for report consumption.</div>
+      </div>
+
+      <!-- Entra ID / MFA -->
+      <div style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🔐</span>
+          <span style="font-weight:600;font-size:13px;color:var(--blue);">Entra ID + MFA</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">Microsoft Entra ID P2 (in E5)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Entra ID P2 included in M365 E5. Covers SSO, MFA, Conditional Access, PIM, and Identity Protection. No add-on needed.</div>
+      </div>
+
+      <!-- Microsoft Teams -->
+      <div style="background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">💬</span>
+          <span style="font-weight:600;font-size:13px;color:var(--rose);">Microsoft Teams</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--rose);letter-spacing:0.05em;margin-bottom:3px;">Included in M365 (all plans)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Teams is included in all M365 business and enterprise plans. App pinning, channel tabs, and Adaptive Cards require no additional licensing.</div>
+      </div>
+
+      <!-- Power BI -->
+      <div style="background:var(--purple-bg);border:1px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">📊</span>
+          <span style="font-weight:600;font-size:13px;color:var(--purple);">Power BI</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Power BI Pro (included in E5)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Power BI Pro included in M365 E5 — covers report sharing and consumption. DirectLake mode requires the Fabric capacity SKU (same as Fabric above).</div>
+      </div>
+
+      <!-- Purview -->
+      <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🛡️</span>
+          <span style="font-weight:600;font-size:13px;color:var(--green);">Microsoft Purview</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">Microsoft Purview (included in E5)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Information Protection, DLP, and sensitivity labels included in E5 via Microsoft Purview. Advanced compliance features (eDiscovery, Audit Premium) also included.</div>
+      </div>
+
+      <!-- Copilot Studio (optional) -->
+      <div style="background:var(--surface2);border:1px dashed var(--border2);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🤖</span>
+          <span style="font-weight:600;font-size:13px;color:var(--ink3);">Copilot Studio</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink4);letter-spacing:0.05em;margin-bottom:3px;">Copilot Studio (add-on · Phase 2 optional)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Not included in E5. Requires a Copilot Studio per-user or message-capacity license. Only needed if adding a conversational agent layer (Phase 2 optional).</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="sb-label">Phases</div>
+      <a class="sb-item active" href="#s-p1"><span class="sb-dot"></span>1 · Pre-Setup</a>
+      <a class="sb-item" href="#s-p2"><span class="sb-dot"></span>2 · Build UI</a>
+      <a class="sb-item" href="#s-p3"><span class="sb-dot"></span>3 · Dataverse</a>
+      <a class="sb-item" href="#s-p4"><span class="sb-dot"></span>4 · Fabric Link</a>
+      <a class="sb-item" href="#s-p5"><span class="sb-dot"></span>5 · Automation</a>
+      <a class="sb-item" href="#s-p6"><span class="sb-dot"></span>6 · Security</a>
+      <a class="sb-item" href="#s-p7"><span class="sb-dot"></span>7 · Reporting</a>
+      <a class="sb-item" href="#s-p8"><span class="sb-dot"></span>8 · Scale</a>
+    </nav>
+
+    <main class="main">
+      <div class="prog-bar">
+        <span class="prog-label">Setup Progress</span>
+        <div class="prog-track"><div class="prog-fill" id="pf1"></div></div>
+        <span class="prog-pct" id="pp1">0%</span>
+      </div>
+
+      <!-- PHASE 1 -->
+      <section class="phase" id="s-p1">
+        <div class="phase-hdr"><span class="ph-num">01</span><h2 class="ph-title">Pre-Setup &amp; Access Provisioning</h2><span class="ph-tag pht-green">Setup</span></div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-g">1.1</div><div class="smeta"><div class="stool">TOOL · Microsoft Admin Center + Entra ID</div><div class="stitle">Confirm M365 E5 Licenses &amp; Roles</div><div class="sdesc">Verify every PM and contributor has the right license before touching any tool.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm all PMs have <strong>M365 E5 licenses</strong> in Admin Center (<code>admin.microsoft.com</code>)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assign <strong>Power Platform Environment Maker</strong> role to the PM or designated builder</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm <strong>Microsoft Fabric capacity</strong> (F2+ SKU) is assigned to your workspace</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Enable <strong>Dataverse</strong> for the Power Platform environment (requires Global Admin)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Ensure <strong>Conditional Access + MFA</strong> is active in Entra ID for all participants</span></li>
+            </ul>
+            <div class="note ok"><span>💡</span><p>Document your environment name and region. Every project reuses the same Power Platform environment — don't create a new one per project.</p></div>
+          </div>
+        </div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-g">1.2</div><div class="smeta"><div class="stool">TOOL · Microsoft Fabric Workspace</div><div class="stitle">Create the Fabric Workspace (One per Project)</div><div class="sdesc">Set up a dedicated Fabric workspace as the data backend for each project.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Go to <code>app.fabric.microsoft.com</code> → <strong>Workspaces → New Workspace</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Name convention: <code>PRJ-[ProjectCode]-Workspace</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assign Fabric capacity to the workspace (F2+ SKU — not Trial)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Create a <strong>Lakehouse</strong> inside: <code>PRJ-[ProjectCode]-Lakehouse</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add PM and data team as <strong>Workspace Members or Contributors</strong></span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section class="phase" id="s-p2">
+        <div class="phase-hdr"><span class="ph-num">02</span><h2 class="ph-title">Build the Intake UI in Power Apps</h2><span class="ph-tag pht-blue">Build</span></div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-b">2.1</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio (make.powerapps.com)</div><div class="stitle">Create the Canvas App from Template</div><div class="sdesc">Build the intake form as a Canvas App — the reusable UI template for all projects.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Go to <code>make.powerapps.com</code> → <strong>+ Create → Canvas App from blank</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Name the master template: <code>IntakeForm-MASTER-Template</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Build a <strong>multi-screen wizard</strong>: Screen 1 = Project Info · Screen 2 = Financial Details · Screen 3 = Review &amp; Submit</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add a <strong>project selector dropdown</strong> — one app serves multiple projects via <code>varProjectCode</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Set field-level conditional visibility on financial fields</span></li>
+            </ul>
+            <div class="note tip"><span>💡</span><p>For each new project, add a new option to the project dropdown. One app, many projects — no duplication.</p></div>
+          </div>
+        </div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-b">2.2</div><div class="smeta"><div class="stool">TOOL · Power Apps → Dataverse Connection</div><div class="stitle">Connect App to Dataverse &amp; Publish to Teams</div><div class="sdesc">Wire form fields to Dataverse and surface the app in Teams via SSO.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>Data → Add data → Dataverse</strong> → select your intake table</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Submit button: use <code>Patch(IntakeRequests, Defaults(IntakeRequests), {...})</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Always include <code>ProjectCode</code> as mandatory in every Patch call</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>Publish → Add to Teams</strong> → pin via Teams Admin Center Setup Policies</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add as a Tab in each project Teams channel · Test SSO (zero additional prompts)</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section class="phase" id="s-p3">
+        <div class="phase-hdr"><span class="ph-num">03</span><h2 class="ph-title">Set Up the Dataverse Schema</h2><span class="ph-tag pht-green">Dataverse</span></div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-g">3.1</div><div class="smeta"><div class="stool">TOOL · Dataverse (make.powerapps.com → Tables)</div><div class="stitle">Design the Intake Table — Multi-Project Schema</div><div class="sdesc">The central Dataverse table capturing all submissions across projects via one key field.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <table class="dt">
+              <thead><tr><th>Column</th><th>Type</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td><code>cr_projectcode</code></td><td>Text (required)</td><td>Links record to a project — the multi-project key</td></tr>
+                <tr><td><code>cr_requesttitle</code></td><td>Text</td><td>Short name for the request</td></tr>
+                <tr><td><code>cr_submittedby</code></td><td>Lookup → User</td><td>Auto-populated from Entra ID</td></tr>
+                <tr><td><code>cr_submissiondate</code></td><td>Date/Time</td><td>Auto-stamp on creation</td></tr>
+                <tr><td><code>cr_financialamount</code></td><td>Currency</td><td>Key financial field</td></tr>
+                <tr><td><code>cr_status</code></td><td>Choice</td><td>Draft / Submitted / Approved / Rejected</td></tr>
+                <tr><td><code>cr_approver</code></td><td>Lookup → User</td><td>Finance manager approver</td></tr>
+              </tbody>
+            </table>
+            <div class="note warn"><span>⚠️</span><p><code>cr_projectcode</code> must be required. This single column lets one table serve all projects with filtered views.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section class="phase" id="s-p4">
+        <div class="phase-hdr"><span class="ph-num">04</span><h2 class="ph-title">Enable Dataverse → Fabric Link</h2><span class="ph-tag pht-amber">Fabric</span></div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-a">4.1</div><div class="smeta"><div class="stool">TOOL · Microsoft Fabric · Link to Dataverse</div><div class="stitle">Zero-Copy Link: Dataverse → OneLake</div><div class="sdesc">Connect Dataverse directly to Fabric — no ETL, no pipeline, near real-time.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Fabric Lakehouse → <strong>Get Data → Dataverse</strong> → select your environment</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Select the <strong>intake request table</strong> → enable <strong>"Link to Microsoft Fabric"</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm the table shortcut appears in <strong>OneLake → Tables</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Run a Fabric Notebook query to validate data is flowing correctly</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Create per-project SQL views in the Lakehouse SQL endpoint: <code>vw_PRJ[Code]_Intake</code></span></li>
+            </ul>
+            <div class="note ok"><span>✅</span><p>The link is near-real-time. Data submitted in Power Apps is queryable in Fabric within seconds — no scheduled refresh needed.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 5 -->
+      <section class="phase" id="s-p5">
+        <div class="phase-hdr"><span class="ph-num">05</span><h2 class="ph-title">Automate Approvals &amp; Notifications</h2><span class="ph-tag pht-blue">Automate</span></div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-b">5.1</div><div class="smeta"><div class="stool">TOOL · Power Automate + Teams Adaptive Cards</div><div class="stitle">Build the Approval Workflow Template</div><div class="sdesc">One reusable flow handles approvals for all projects — approver pulled dynamically from the record.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Trigger: <strong>"When a row is added/modified" → Dataverse → IntakeRequests</strong> · condition: <code>Status = 'Submitted'</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>Start and wait for an approval</strong> → Approver = <code>cr_approver</code> from the record</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">On approval: update <code>cr_status = 'Approved'</code> + send Teams Adaptive Card to submitter</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">On rejection: update <code>cr_status = 'Rejected'</code> + Teams notification with reason</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Save as <strong>Solution-aware flow</strong> for portability across environments</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 6 -->
+      <section class="phase" id="s-p6">
+        <div class="phase-hdr"><span class="ph-num">06</span><h2 class="ph-title">Security &amp; Governance</h2><span class="ph-tag pht-rose">Security</span></div>
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-r">6.1</div><div class="smeta"><div class="stool">TOOL · Purview + Dataverse Security Roles + Entra ID</div><div class="stitle">Financial Data Security — Full Layer Checklist</div><div class="sdesc">Enforce security at every layer: app, write, read, and audit.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <table class="dt">
+              <thead><tr><th>Layer</th><th>Tool</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>Auth</td><td>Entra ID</td><td>MFA + Conditional Access for all users</td></tr>
+                <tr><td>App</td><td>Power Apps</td><td>Share only with Entra groups per project</td></tr>
+                <tr><td>Write</td><td>Dataverse RLS</td><td>Security roles per project — server-side enforcement</td></tr>
+                <tr><td>Read</td><td>Power BI RLS</td><td>Semantic model role scoped by project_code</td></tr>
+                <tr><td>Classification</td><td>Purview</td><td>"Financial – Confidential" sensitivity labels</td></tr>
+                <tr><td>Audit</td><td>Sentinel (E5)</td><td>Route Dataverse + Fabric logs to Sentinel</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 7 -->
+      <section class="phase" id="s-p7">
+        <div class="phase-hdr"><span class="ph-num">07</span><h2 class="ph-title">Power BI Reporting</h2><span class="ph-tag pht-amber">Reporting</span></div>
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-a">7.1</div><div class="smeta"><div class="stool">TOOL · Power BI + Fabric Semantic Model (DirectLake)</div><div class="stitle">Build the Multi-Project PM Dashboard</div><div class="sdesc">One report, all projects — each PM scoped to their own data via RLS.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Fabric workspace: <strong>New → Semantic Model</strong> → connect to Lakehouse <code>vw_AllProjects_Summary</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add RLS role: <code>ProjectMember</code> filtered by <code>[ProjectCode] = USERNAME()</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Build report: intake volume · approval funnel · financial totals · submission trend</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Pin report as a tab in each Teams project channel</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 8 -->
+      <section class="phase" id="s-p8">
+        <div class="phase-hdr"><span class="ph-num">08</span><h2 class="ph-title">Scale — New Project Spin-Up</h2><span class="ph-tag pht-purple">Scale</span></div>
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-p">8.1</div><div class="smeta"><div class="stool">TOOL · All of the above — config only</div><div class="stitle">7-Step New Project Onboarding Checklist</div><div class="sdesc">No new infrastructure. A new project is just configuration.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>1 — Register:</strong> Add <code>ProjectCode</code> to Power Apps dropdown lookup table</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>2 — Security:</strong> Create Entra ID group <code>SG-PRJ[Code]-Members</code> and assign users</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>3 — Dataverse role:</strong> Duplicate template role → rename <code>Role-PRJ[Code]-Member</code> → assign group</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>4 — Fabric view:</strong> Create <code>vw_PRJ[Code]_Intake</code> in Lakehouse SQL endpoint</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>5 — Power BI RLS:</strong> Add project code to semantic model role mapping</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>6 — Teams channel:</strong> Create <code>PRJ-[Code]</code> channel · pin intake app + report as tabs</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>7 — Test:</strong> Submit test record · verify approval fires · confirm data in Fabric report</span></li>
+            </ul>
+            <div class="note ok"><span>🚀</span><p><strong>Target: under 1 hour per new project.</strong> All infrastructure is already running — you're only registering a project code and configuring access.</p></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div><!-- /tab-setup -->
+
+
+<!-- ════════════════════════════════════
+     TAB 2 — COLLABORATION & DATA FLOW
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-collab">
+
+  <div class="panel-header">
+    <div class="ph-kicker">Team Collaboration · Data Requirements · Engineering Handoff</div>
+    <h1>How PM &amp; Data Engineering<br>Work Together</h1>
+    <p>The PM owns requirements and the intake experience. Data Engineering owns integration, the Fabric backend, and the data pipeline. Here's how they collaborate and where the data flows.</p>
+  </div>
+
+  <div class="collab-section">
+
+    <!-- SWIMLANE -->
+    <div class="swim-wrap">
+      <div class="swim-title">Requirements &amp; Handoff Process</div>
+      <div class="swim-sub">How a data requirement moves from PM discovery through to a live Fabric-integrated pipeline.</div>
+
+      <div class="swimlane">
+        <!-- header row -->
+        <div class="sl-header" style="grid-template-columns:160px 1fr 1fr 1fr;">
+          <div class="sl-role" style="background:var(--surface2);color:var(--ink4);">Stage</div>
+          <div class="sl-role sl-pm">👤 PM (Project Manager)</div>
+          <div class="sl-role sl-shared">🤝 Shared / Review</div>
+          <div class="sl-role sl-de">⚙️ Data Engineering</div>
+        </div>
+
+        <!-- Stage 1 -->
+        <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;">
+          <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 1<br><strong style="font-size:11px;color:var(--ink2);">Discovery</strong></div>
+          </div>
+          <div class="sl-cell pm-cell">
+            <div class="flow-step">
+              <div class="fs-num">PM-01</div>
+              <div class="fs-title">Identify Data Need</div>
+              <div class="fs-body">PM identifies a reporting or intake gap. Defines what data needs to be captured, who submits it, and what decisions it informs.</div>
+            </div>
+            <div class="flow-step">
+              <div class="fs-num">PM-02</div>
+              <div class="fs-title">Draft Intake Form Fields</div>
+              <div class="fs-body">Lists all fields needed: field name, type (text/currency/date), required or optional, and which are sensitive/financial.</div>
+            </div>
+          </div>
+          <div class="sl-cell sh-cell empty"></div>
+          <div class="sl-cell de-cell empty"></div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
+          <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 2<br><strong style="font-size:11px;color:var(--ink2);">Alignment</strong></div>
+          </div>
+          <div class="sl-cell pm-cell">
+            <div class="flow-step">
+              <div class="fs-num">PM-03</div>
+              <div class="fs-title">Share Requirements Doc</div>
+              <div class="fs-body">PM shares a structured requirements doc (in SharePoint / Confluence) with: field list, data types, governance notes, and reporting goals.</div>
+            </div>
+          </div>
+          <div class="sl-cell sh-cell">
+            <div class="handoff">
+              <div class="ho-icon">📋</div>
+              <div>
+                <div class="ho-label">Handoff Artifact</div>
+                <div class="ho-title">Data Requirements Doc</div>
+                <div class="ho-desc">Fields · Types · Sensitivity flags · Reporting KPIs · Frequency</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="fs-num">REVIEW</div>
+              <div class="fs-title">Joint Review Session</div>
+              <div class="fs-body">PM + DE meet to align on schema design, data types, and what Fabric layer each field belongs to. DE flags any governance or modeling concerns.</div>
+            </div>
+          </div>
+          <div class="sl-cell de-cell">
+            <div class="flow-step">
+              <div class="fs-num">DE-01</div>
+              <div class="fs-title">Review &amp; Validate Schema</div>
+              <div class="fs-body">DE reviews PM's field list against Dataverse/Fabric schema patterns. Proposes normalized structure, naming conventions, and partitioning strategy.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
+          <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 3<br><strong style="font-size:11px;color:var(--ink2);">Build</strong></div>
+          </div>
+          <div class="sl-cell pm-cell">
+            <div class="flow-step">
+              <div class="fs-num">PM-04</div>
+              <div class="fs-title">Build Canvas App UI</div>
+              <div class="fs-body">PM (or Power Platform maker) builds the intake form in Power Apps, connecting to the Dataverse table DE has created.</div>
+            </div>
+            <div class="flow-step">
+              <div class="fs-num">PM-05</div>
+              <div class="fs-title">Configure Approval Flow</div>
+              <div class="fs-body">PM builds the Power Automate approval workflow using the Dataverse trigger. Sets up Teams notifications and approver routing.</div>
+            </div>
+          </div>
+          <div class="sl-cell sh-cell">
+            <div class="handoff">
+              <div class="ho-icon">🔗</div>
+              <div>
+                <div class="ho-label">Integration Handoff</div>
+                <div class="ho-title">Dataverse Table Spec</div>
+                <div class="ho-desc">DE provides table name, column names, and data types. PM maps form fields to these columns.</div>
+              </div>
+            </div>
+          </div>
+          <div class="sl-cell de-cell">
+            <div class="flow-step">
+              <div class="fs-num">DE-02</div>
+              <div class="fs-title">Create Dataverse Table</div>
+              <div class="fs-body">DE creates the Dataverse intake table with agreed schema, sets column types, required fields, and applies Purview sensitivity labels.</div>
+            </div>
+            <div class="flow-step">
+              <div class="fs-num">DE-03</div>
+              <div class="fs-title">Configure Fabric Link</div>
+              <div class="fs-body">DE enables the zero-copy Dataverse → OneLake link in the Fabric workspace. Creates the Lakehouse, SQL views, and Semantic Model.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
+          <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 4<br><strong style="font-size:11px;color:var(--ink2);">Validate</strong></div>
+          </div>
+          <div class="sl-cell pm-cell">
+            <div class="flow-step">
+              <div class="fs-num">PM-06</div>
+              <div class="fs-title">UAT &amp; Sign-Off</div>
+              <div class="fs-body">PM runs user acceptance testing: submits test records, validates approval flow, confirms data appears in Power BI report correctly.</div>
+            </div>
+          </div>
+          <div class="sl-cell sh-cell">
+            <div class="flow-step">
+              <div class="fs-num">JOINT</div>
+              <div class="fs-title">End-to-End Test</div>
+              <div class="fs-body">PM and DE jointly verify: form → Dataverse write → Fabric link → Power BI refresh. Both sign off before go-live.</div>
+            </div>
+          </div>
+          <div class="sl-cell de-cell">
+            <div class="flow-step">
+              <div class="fs-num">DE-04</div>
+              <div class="fs-title">Validate Data in Fabric</div>
+              <div class="fs-body">DE confirms test records appear in OneLake with correct schema, no nulls on required fields, and partitioning is working correctly.</div>
+            </div>
+            <div class="flow-step">
+              <div class="fs-num">DE-05</div>
+              <div class="fs-title">Build Power BI Report</div>
+              <div class="fs-body">DE creates the DirectLake Semantic Model and Power BI report. Applies RLS roles so each PM sees only their project data.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
+          <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 5<br><strong style="font-size:11px;color:var(--ink2);">Live + Scale</strong></div>
+          </div>
+          <div class="sl-cell pm-cell">
+            <div class="flow-step">
+              <div class="fs-num">PM-07</div>
+              <div class="fs-title">Onboard New Projects</div>
+              <div class="fs-body">For each new project: PM runs the 7-step config checklist (Tab 1). No new infrastructure needed — DE only adds a SQL view and RLS mapping.</div>
+            </div>
+          </div>
+          <div class="sl-cell sh-cell empty"></div>
+          <div class="sl-cell de-cell">
+            <div class="flow-step">
+              <div class="fs-num">DE-06</div>
+              <div class="fs-title">Add SQL View + RLS</div>
+              <div class="fs-body">For each new project: DE creates <code>vw_PRJ[Code]_Intake</code> in the Lakehouse and adds the RLS mapping in the Semantic Model. ~15 minutes per project.</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /swimlane -->
+    </div><!-- /swim-wrap -->
+
+
+    <!-- DATA FLOW LAYERS -->
+    <div class="dataflow-wrap">
+      <div class="swim-title">Data Flow — From Form Submission to Fabric Reporting</div>
+      <div class="swim-sub">How a single intake form submission travels through every layer of the stack, from the user's browser to the Power BI report.</div>
+
+      <div class="layer-stack">
+
+        <div class="layer l-ui">
+          <div class="layer-label">
+            <div class="ll-tag">Layer 1</div>
+            <div class="ll-name">Presentation</div>
+          </div>
+          <div class="layer-body">
+            <div class="layer-chip"><span class="lc-icon">🎨</span> Power Apps Canvas App</div>
+            <div class="layer-chip"><span class="lc-icon">💬</span> Microsoft Teams Tab</div>
+            <div class="layer-chip"><span class="lc-icon">🔐</span> Entra ID SSO</div>
+            <div class="layer-desc">User opens the intake form in Teams (or Power Apps). Entra ID authenticates silently. Multi-screen wizard collects structured data including financial fields. On submit, the form calls <code>Patch()</code> to write directly into Dataverse. <strong>PM owns this layer.</strong></div>
+          </div>
+        </div>
+
+        <div class="layer-arrow">↓</div>
+
+        <div class="layer l-pa">
+          <div class="layer-label">
+            <div class="ll-tag">Layer 2</div>
+            <div class="ll-name">Workflow</div>
+          </div>
+          <div class="layer-body">
+            <div class="layer-chip"><span class="lc-icon">⚡</span> Power Automate</div>
+            <div class="layer-chip"><span class="lc-icon">✅</span> Approvals Connector</div>
+            <div class="layer-chip"><span class="lc-icon">📣</span> Adaptive Cards</div>
+            <div class="layer-desc">A Dataverse row-change event triggers an approval flow instantly. Power Automate routes the request to the approver (pulled from <code>cr_approver</code>), sends Teams notifications, and updates <code>cr_status</code> on resolution. <strong>PM builds and owns this layer.</strong></div>
+          </div>
+        </div>
+
+        <div class="layer-arrow">↓</div>
+
+        <div class="layer l-dv">
+          <div class="layer-label">
+            <div class="ll-tag">Layer 3</div>
+            <div class="ll-name">Operational Store</div>
+          </div>
+          <div class="layer-body">
+            <div class="layer-chip"><span class="lc-icon">🗄️</span> Dataverse Table</div>
+            <div class="layer-chip"><span class="lc-icon">🔒</span> Row-Level Security</div>
+            <div class="layer-chip"><span class="lc-icon">📝</span> Change Tracking</div>
+            <div class="layer-chip"><span class="lc-icon">🛡️</span> Purview Labels</div>
+            <div class="layer-desc">All intake records land here. Dataverse enforces server-side business rules, field-level security, and maintains a full audit log. Financial fields are tagged with Purview sensitivity labels. Data is partitioned by <code>cr_projectcode</code> for multi-project isolation. <strong>DE creates schema; Dataverse manages it.</strong></div>
+          </div>
+        </div>
+
+        <div class="layer-arrow">↓  <span style="font-size:11px;color:var(--ink4);font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;"> Zero-copy link — no ETL, no pipeline, near real-time</span></div>
+
+        <div class="layer l-fl">
+          <div class="layer-label">
+            <div class="ll-tag">Layer 4</div>
+            <div class="ll-name">Analytics Store</div>
+          </div>
+          <div class="layer-body">
+            <div class="layer-chip"><span class="lc-icon">🏗️</span> Fabric OneLake</div>
+            <div class="layer-chip"><span class="lc-icon">📂</span> Lakehouse (Delta)</div>
+            <div class="layer-chip"><span class="lc-icon">🔍</span> SQL Endpoint</div>
+            <div class="layer-chip"><span class="lc-icon">📊</span> Semantic Model</div>
+            <div class="layer-desc">Dataverse data lands in OneLake via zero-copy shortcut — the original data stays in Dataverse, Fabric reads it directly. DE creates per-project SQL views (<code>vw_PRJ001_Intake</code>) and a cross-project summary view. The Semantic Model applies RLS so each PM sees only their project's data. <strong>Data Engineering owns this layer entirely.</strong></div>
+          </div>
+        </div>
+
+        <div class="layer-arrow">↓</div>
+
+        <div class="layer l-bi">
+          <div class="layer-label">
+            <div class="ll-tag">Layer 5</div>
+            <div class="ll-name">Reporting</div>
+          </div>
+          <div class="layer-body">
+            <div class="layer-chip"><span class="lc-icon">📊</span> Power BI DirectLake</div>
+            <div class="layer-chip"><span class="lc-icon">💬</span> Teams Report Tab</div>
+            <div class="layer-chip"><span class="lc-icon">🤖</span> Fabric AI Agent</div>
+            <div class="layer-desc">Power BI connects to the Fabric Semantic Model via DirectLake — no import, no scheduled refresh. Reports always reflect live data. PMs see intake volume, approval funnel, and financial totals scoped to their project. Pinned as a tab in Teams. <strong>DE builds the model; PMs consume the reports.</strong></div>
+          </div>
+        </div>
+
+      </div><!-- /layer-stack -->
+    </div>
+
+    <!-- INGESTION STEPS -->
+    <div class="swim-title" style="margin-bottom:6px;">End-to-End Ingestion Steps</div>
+    <div class="swim-sub" style="margin-bottom:20px;">The exact sequence from a user clicking Submit to data appearing in the Power BI report.</div>
+    <div class="ingest-steps">
+      <div class="ingest-step">
+        <div class="is-icon">👤</div>
+        <div class="is-label">Step 1</div>
+        <div class="is-title">User Submits</div>
+        <div class="is-desc">Power Apps <code>Patch()</code> writes record to Dataverse IntakeRequests table</div>
+      </div>
+      <div class="ingest-step">
+        <div class="is-icon">⚡</div>
+        <div class="is-label">Step 2</div>
+        <div class="is-title">Flow Triggers</div>
+        <div class="is-desc">Dataverse row-change event fires Power Automate approval flow instantly</div>
+      </div>
+      <div class="ingest-step">
+        <div class="is-icon">🔗</div>
+        <div class="is-label">Step 3</div>
+        <div class="is-title">Zero-Copy Sync</div>
+        <div class="is-desc">Dataverse → Fabric link pushes new record into OneLake within seconds. No ETL.</div>
+      </div>
+      <div class="ingest-step">
+        <div class="is-icon">🗄️</div>
+        <div class="is-label">Step 4</div>
+        <div class="is-title">Delta Table Updated</div>
+        <div class="is-desc">Record lands in Fabric Lakehouse Delta table, partitioned by <code>project_code</code></div>
+      </div>
+      <div class="ingest-step">
+        <div class="is-icon">📊</div>
+        <div class="is-label">Step 5</div>
+        <div class="is-title">Report Reflects Live</div>
+        <div class="is-desc">Power BI DirectLake reads new data instantly — no refresh needed</div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /tab-collab -->
+
+
+<!-- ════════════════════════════════════
+     TAB 3 — DECISION MATRIX
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-matrix">
+
+  <div class="panel-header">
+    <div class="ph-kicker">Architecture Decision Matrix · All Three Options Compared</div>
+    <h1>Which Architecture<br>Should You Choose?</h1>
+    <p>A structured comparison across licensing, complexity, security, resilience, and Fabric integration — built to inform stakeholder decisions. Power Apps → Dataverse → Fabric is the selected approach for this platform.</p>
+    <div class="chosen-badge">✓ Selected Architecture — Power Apps → Dataverse → Fabric Zero-Copy Link</div>
+  </div>
+
+  <div class="dm-wrap">
+
+    <!-- option cards -->
+    <div class="opt-cards">
+      <div class="opt-card chosen">
+        <div class="oc-crown">✓ CHOSEN</div>
+        <div class="oc-num">// OPTION 01</div>
+        <div class="oc-title">Power Apps →<br>Dataverse → Fabric</div>
+        <div class="oc-stack" style="margin-top:6px;">Canvas App · Dataverse · Zero-Copy Link · Power BI</div>
+      </div>
+      <div class="opt-card not-chosen">
+        <div class="oc-num">// OPTION 02</div>
+        <div class="oc-title">Power Apps →<br>Fabric Direct Write</div>
+        <div class="oc-stack" style="margin-top:6px;">Canvas App · PA HTTP · Fabric REST API · PySpark</div>
+      </div>
+      <div class="opt-card not-chosen">
+        <div class="oc-num">// OPTION 03</div>
+        <div class="oc-title">Power Apps →<br>SharePoint → Fabric</div>
+        <div class="oc-stack" style="margin-top:6px;">Canvas App · SharePoint Lists · PA · Fabric Pipeline</div>
+      </div>
+    </div>
+
+    <!-- recommendation banner -->
+    <div class="rec-banner">
+      <div class="rb-icon">✅</div>
+      <div class="rb-text">
+        <h3>Selected Architecture: Power Apps → Dataverse → Fabric</h3>
+        <p>For a <strong>PM-led, multi-project intake platform handling financial data on M365 E5</strong>, Option 1 is the clear choice. Fully covered by existing E5 licensing, delivers the strongest security for financial data, connects to Fabric via zero-copy link with zero ETL, and is maintainable by a Power Platform maker without data engineering skills. Option 2 requires Premium licensing, introduces 30–90 second submission latency, and rebuilds what Dataverse gives for free. Option 3 is suitable only for low-sensitivity, low-volume prototyping.</p>
+      </div>
+    </div>
+
+    <!-- Licensing -->
+    <div class="mx-section">
+      <div class="mx-label">01 · Licensing &amp; Cost</div>
+      <table class="mxtable">
+        <thead><tr><th></th><th class="mth-g">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-b">Option 3 · SharePoint</th></tr></thead>
+        <tbody>
+          <tr><td>Included in M365 E5</td><td class="chosen-col"><span class="tag-y">✓ Fully</span></td><td><span class="tag-w">⚠ Partial</span></td><td><span class="tag-y">✓ Fully</span></td></tr>
+          <tr><td>Extra licensing required</td><td class="chosen-col"><span class="tag-y">None</span></td><td><span class="tag-n">PA Premium needed</span></td><td><span class="tag-y">None</span></td></tr>
+          <tr><td>Additional infra cost</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Zero</td><td style="color:var(--amber);">Low–Medium</td><td style="color:var(--green);font-weight:600;">Zero</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Complexity -->
+    <div class="mx-section">
+      <div class="mx-label">02 · Build &amp; Maintenance Complexity</div>
+      <table class="mxtable">
+        <tbody>
+          <tr><td>Setup effort</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:45%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">Low</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">High</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:25%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">V.Low</span></div></td>
+          </tr>
+          <tr><td>Skills required</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Power Platform maker</td><td style="color:var(--rose);">Data engineer + PA dev</td><td style="color:var(--green);font-weight:600;">Power Platform maker</td></tr>
+          <tr><td>Time to first submission</td><td class="chosen-col" style="color:var(--green);font-weight:600;">1–2 days</td><td style="color:var(--rose);">1–2 weeks</td><td style="color:var(--green);font-weight:600;">Half a day</td></tr>
+          <tr><td>Custom code to maintain</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Zero</td><td style="color:var(--rose);">PySpark notebook + flow</td><td style="color:var(--amber);">Flow logic only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Security -->
+    <div class="mx-section">
+      <div class="mx-label">03 · Security &amp; Governance (Financial Data)</div>
+      <table class="mxtable">
+        <tbody>
+          <tr><td>Row-level security</td><td class="chosen-col"><span class="tag-y">✓ Native (Dataverse)</span></td><td><span class="tag-w">⚠ Power BI only</span></td><td><span class="tag-w">⚠ Site-level only</span></td></tr>
+          <tr><td>Write-layer validation</td><td class="chosen-col"><span class="tag-y">✓ Server-side rules</span></td><td><span class="tag-n">✗ App-side only</span></td><td><span class="tag-n">✗ App-side only</span></td></tr>
+          <tr><td>Financial field masking</td><td class="chosen-col"><span class="tag-y">✓ Native field security</span></td><td><span class="tag-n">✗ Manual build</span></td><td><span class="tag-n">✗ Not available</span></td></tr>
+          <tr><td>Native audit trail</td><td class="chosen-col"><span class="tag-y">✓ Built-in change log</span></td><td><span class="tag-w">⚠ 28-day PA history</span></td><td><span class="tag-w">⚠ SharePoint audit only</span></td></tr>
+          <tr><td>Compliance fitness</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">Strong</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:52%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">Medium</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:35%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">Weak</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Resilience -->
+    <div class="mx-section">
+      <div class="mx-label">04 · Resilience &amp; Performance</div>
+      <table class="mxtable">
+        <tbody>
+          <tr><td>Submission response time</td><td class="chosen-col" style="color:var(--green);font-weight:600;">&lt; 2 seconds</td><td style="color:var(--rose);">30–90 sec (notebook cold start)</td><td style="color:var(--amber);">2–5 seconds</td></tr>
+          <tr><td>Write failure behaviour</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Instant retry, graceful error</td><td style="color:var(--rose);">Silent loss without fallback</td><td style="color:var(--amber);">SharePoint handles it</td></tr>
+          <tr><td>Single point of failure</td><td class="chosen-col"><span class="tag-y">Low risk</span></td><td><span class="tag-n">Client secret expiry = outage</span></td><td><span class="tag-w">Medium risk</span></td></tr>
+          <tr><td>Fabric data freshness</td><td class="chosen-col"><span class="tag-y">Near real-time (zero-copy)</span></td><td><span class="tag-y">Real-time (direct write)</span></td><td><span class="tag-w">⚠ Scheduled pipeline delay</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Fabric Integration -->
+    <div class="mx-section">
+      <div class="mx-label">05 · Fabric Integration</div>
+      <table class="mxtable">
+        <tbody>
+          <tr><td>How data reaches Fabric</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Zero-copy link (no movement)</td><td style="color:var(--amber);">Direct Delta write via API</td><td style="color:var(--rose);">Pipeline push (ETL hop)</td></tr>
+          <tr><td>ETL / pipeline required</td><td class="chosen-col"><span class="tag-y">None</span></td><td><span class="tag-y">None</span></td><td><span class="tag-n">Yes — pipeline needed</span></td></tr>
+          <tr><td>Power BI mode</td><td class="chosen-col" style="color:var(--green);font-weight:600;">DirectLake</td><td style="color:var(--green);font-weight:600;">DirectLake</td><td style="color:var(--amber);">Import or DirectQuery</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Scores -->
+    <div class="mx-section">
+      <div class="mx-label">06 · Overall Fit Scores</div>
+      <table class="mxtable">
+        <thead><tr><th>Dimension</th><th class="mth-g">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-b">Option 3 · SharePoint</th></tr></thead>
+        <tbody>
+          <tr><td>Licensing fit (E5)</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">10/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:60%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">6/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">10/10</span></div></td>
+          </tr>
+          <tr><td>Security for financial data</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">9/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:55%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">5/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:40%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">4/10</span></div></td>
+          </tr>
+          <tr><td>Build simplicity</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:80%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">8/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:30%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">3/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">9/10</span></div></td>
+          </tr>
+          <tr><td>Resilience</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">9/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">5/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:70%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">7/10</span></div></td>
+          </tr>
+          <tr><td>Fabric integration quality</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">10/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:80%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">8/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">5/10</span></div></td>
+          </tr>
+          <tr><td>Multi-project scalability</td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">9/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:75%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">7/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:60%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">6/10</span></div></td>
+          </tr>
+          <tr style="border-top:2px solid var(--border2);">
+            <td><strong>Total (weighted)</strong></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:93%;background:var(--green)"></div></div><span class="sval" style="color:var(--green);font-weight:700;font-size:13px;">55/60</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:57%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber);font-weight:700;font-size:13px;">34/60</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:68%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue);font-weight:700;font-size:13px;">41/60</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Risk register -->
+    <div class="mx-section">
+      <div class="mx-label">07 · Risk Register</div>
+      <table class="mxtable">
+        <thead><tr><th>Risk</th><th class="mth-g">Option 1</th><th class="mth-a">Option 2</th><th class="mth-b">Option 3</th></tr></thead>
+        <tbody>
+          <tr><td>Premium license blocker</td><td class="chosen-col"><span class="tag-y">Not applicable</span></td><td><span class="tag-n">🔴 Critical</span></td><td><span class="tag-y">Not applicable</span></td></tr>
+          <tr><td>Slow submission UX</td><td class="chosen-col"><span class="tag-y">Low risk</span></td><td><span class="tag-n">🔴 30–90s latency</span></td><td><span class="tag-y">Low risk</span></td></tr>
+          <tr><td>Financial data bypass</td><td class="chosen-col"><span class="tag-y">Server-side rules</span></td><td><span class="tag-w">🟠 App-side only</span></td><td><span class="tag-w">🟠 App-side only</span></td></tr>
+          <tr><td>Auth credential expiry outage</td><td class="chosen-col"><span class="tag-y">Not applicable</span></td><td><span class="tag-n">🟠 Client secret expires</span></td><td><span class="tag-y">Low risk</span></td></tr>
+          <tr><td>Data loss on write failure</td><td class="chosen-col"><span class="tag-y">Very low</span></td><td><span class="tag-w">🟠 Without fallback queue</span></td><td><span class="tag-y">Low</span></td></tr>
+          <tr><td>Audit compliance gap</td><td class="chosen-col"><span class="tag-y">None — native log</span></td><td><span class="tag-w">🟠 28-day PA history only</span></td><td><span class="tag-w">🟡 SharePoint audit only</span></td></tr>
+          <tr><td>Financial field-level exposure</td><td class="chosen-col"><span class="tag-y">Protected natively</span></td><td><span class="tag-w">🟠 Manual only</span></td><td><span class="tag-n">🔴 No field masking</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink4);border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
+      // Generated for M365 E5 + Microsoft Fabric intake platform · Power Apps Canvas App · Multi-project PM template · Option 1 selected
+    </div>
+
+  </div>
+</div><!-- /tab-matrix -->
+
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleStep(card) {
+    card.classList.toggle('open');
+    const body = card.querySelector('.sbody');
+    body.classList.toggle('visible');
+    updateProgress();
+  }
+
+  function toggleCheck(e, box) {
+    e.stopPropagation();
+    box.classList.toggle('checked');
+    box.textContent = box.classList.contains('checked') ? '✓' : '';
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const all  = document.querySelectorAll('#tab-setup .cbox');
+    const done = document.querySelectorAll('#tab-setup .cbox.checked');
+    const pct  = all.length ? Math.round((done.length / all.length) * 100) : 0;
+    document.getElementById('pf1').style.width = pct + '%';
+    document.getElementById('pp1').textContent  = pct + '%';
+  }
+
+  // sidebar nav
+  document.querySelectorAll('.sb-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const t = document.querySelector(this.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
