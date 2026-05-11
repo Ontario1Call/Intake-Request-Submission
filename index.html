@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PM Guide — M365 + Fabric Platform</title>
+<title>Ontario One Call — M365 Business Premium Platform Guide</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
@@ -41,6 +41,9 @@
   --purple-bd:#c4a8f0;
 
   --accent:   #2a7a4f;   /* primary accent = green (chosen option) */
+  --ooc:      #F26522;    /* Ontario One Call orange */
+  --ooc-bg:   #FEF0E8;
+  --ooc-bd:   #FDDCC8;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,10 +59,10 @@ body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', s
 }
 .tab-logo {
   display: flex; align-items: center; gap: 10px;
-  padding: 0 28px;
+  padding: 0 22px;
   border-right: 1px solid rgba(255,255,255,0.08);
-  font-family: 'Fraunces', serif;
-  font-size: 14px; font-weight: 600;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
   color: rgba(255,255,255,0.9);
   white-space: nowrap;
 }
@@ -99,7 +102,7 @@ body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', s
 .panel-header::after {
   content: '';
   position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--green) 0%, transparent 60%);
+  background: linear-gradient(90deg, var(--ooc) 0%, var(--green) 40%, transparent 70%);
 }
 .ph-kicker {
   font-family: 'IBM Plex Mono', monospace;
@@ -494,7 +497,7 @@ code {
 
 <!-- ═══ TAB BAR ═══ -->
 <div class="tab-bar">
-  <div class="tab-logo">M365 <span>+</span> Fabric</div>
+  <div class="tab-logo"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--ooc);border-radius:5px;font-size:11px;font-weight:800;color:#fff;font-family:'IBM Plex Mono',monospace;flex-shrink:0;letter-spacing:-0.02em;">ON1</span>&nbsp; Ontario One Call <span style="color:var(--ooc);">BP</span></div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('setup')">
       <span class="tb-num">01</span> PM Setup Guide
@@ -515,9 +518,9 @@ code {
 <div class="tab-panel active" id="tab-setup">
 
   <div class="panel-header">
-    <div class="ph-kicker">PM Getting Started Guide · M365 E5 · Microsoft Fabric</div>
-    <h1>Your M365 + Fabric<br>Intake Platform — Setup Guide</h1>
-    <p>Step-by-step tool setup templated for running multiple projects. Architecture selected based on financial data requirements, M365 E5 licensing, and PM-led team capability. Stack: Power Apps → Dataverse → Fabric zero-copy link → Power BI.</p>
+    <div class="ph-kicker">PM Getting Started Guide · M365 Business Premium · Microsoft Fabric</div>
+    <h1>Your M365 Business Premium<br>Intake Platform — <span style="color:var(--accent)">Setup Guide</span></h1>
+    <p>Step-by-step tool setup for running multiple projects across Ontario One Call operations on M365 Business Premium. Architecture accounts for Business Premium licensing boundaries — including the critical Dataverse constraint — and PM-led team capability. Stack: Power Apps → Full Dataverse (add-on required) → Fabric zero-copy link → Power BI.</p>
     <div class="chosen-badge">✓ Selected Architecture — Dataverse + Fabric Zero-Copy Link</div>
   </div>
 
@@ -526,9 +529,10 @@ code {
     <div style="display:flex;align-items:center;gap:8px;padding:10px 0 6px;border-bottom:1px solid var(--border);">
       <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink4);">License Requirements per Platform</span>
       <span style="font-size:11px;color:var(--ink4);">—</span>
-      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--green);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span> Included in M365 E5</span>
-      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--amber);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block;"></span> Requires Add-On / SKU</span>
-      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--blue);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;"></span> Included in M365 (any plan)</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--green);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span> Included in Business Premium</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--amber);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block;"></span> Requires Add-On</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--rose);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--rose);display:inline-block;"></span> Not Included</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--purple);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--purple);display:inline-block;"></span> BP Exclusive Benefit</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;padding:14px 0 16px;">
 
@@ -539,8 +543,8 @@ code {
           <span style="font-weight:600;font-size:13px;color:var(--blue);">Power Apps Canvas</span>
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">M365 E5 · Power Apps for M365</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Included in E5. Covers standard connectors + Canvas App creation. No per-app licensing needed for internal users.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">M365 BP · Power Apps for M365</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Included in Business Premium. Covers standard connectors + Canvas App creation. No per-app licensing for internal users on standard connectors.</div>
       </div>
 
       <!-- Power Automate -->
@@ -550,22 +554,22 @@ code {
           <span style="font-weight:600;font-size:13px;color:var(--purple);">Power Automate</span>
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Power Automate (M365 plan)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Standard connectors included in E5. Dataverse trigger is standard. <strong style="color:var(--amber);">HTTP connector requires Premium</strong> — only needed for Option 2 (Fabric Direct). Not required here.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Standard connectors (M365 plan)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Standard connectors included. Dataverse trigger and Approvals connector are standard — no Premium PA license needed for this architecture.</div>
       </div>
 
-      <!-- Dataverse -->
-      <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:10px 13px;">
+      <!-- Dataverse CRITICAL -->
+      <div style="background:var(--rose-bg);border:2px solid var(--rose-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">🗄️</span>
-          <span style="font-weight:600;font-size:13px;color:var(--green);">Microsoft Dataverse</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+          <span style="font-weight:600;font-size:13px;color:var(--rose);">Microsoft Dataverse</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">Power Apps for M365 (included in E5)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Dataverse for Teams included in E5. Full Dataverse (standalone) included with Power Apps per-user plan or Power Platform Premium — confirm your E5 bundle level.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--rose);letter-spacing:0.05em;margin-bottom:3px;">⚠ Teams Only — Add-On Required</div>
+        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--rose);">BP includes Dataverse for Teams only.</strong> Full Dataverse required for Fabric link + RLS. Add Power Apps per-user plan (~$20/user/mo) to unlock.</div>
       </div>
 
-      <!-- Microsoft Fabric -->
+      <!-- Fabric -->
       <div style="background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">🏗️</span>
@@ -573,64 +577,95 @@ code {
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
         </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:0.05em;margin-bottom:3px;">Fabric Capacity SKU — F2 minimum</div>
-        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--amber);">Not included in M365 E5.</strong> Requires a separate Fabric capacity SKU: F2 (dev/test) · F4+ (production). Power BI Pro included in E5 for report consumption.</div>
+        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--amber);">Not included in any M365 plan.</strong> Requires separate Fabric capacity SKU: F2 (dev/test) · F4+ (production).</div>
       </div>
 
-      <!-- Entra ID / MFA -->
+      <!-- Entra ID -->
       <div style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">🔐</span>
           <span style="font-weight:600;font-size:13px;color:var(--blue);">Entra ID + MFA</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">Microsoft Entra ID P2 (in E5)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Entra ID P2 included in M365 E5. Covers SSO, MFA, Conditional Access, PIM, and Identity Protection. No add-on needed.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">Microsoft Entra ID P1 (in BP)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Entra ID P1 included. Covers SSO, MFA, basic Conditional Access. <strong style="color:var(--amber);">No PIM or Identity Protection</strong> — P2 features not available in Business Premium.</div>
       </div>
 
-      <!-- Microsoft Teams -->
+      <!-- Teams -->
       <div style="background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">💬</span>
           <span style="font-weight:600;font-size:13px;color:var(--rose);">Microsoft Teams</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;"></span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
         </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--rose);letter-spacing:0.05em;margin-bottom:3px;">Included in M365 (all plans)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Teams is included in all M365 business and enterprise plans. App pinning, channel tabs, and Adaptive Cards require no additional licensing.</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Teams fully included. App pinning, channel tabs, and Adaptive Cards require no additional licensing.</div>
       </div>
 
       <!-- Power BI -->
       <div style="background:var(--purple-bg);border:1px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">📊</span>
-          <span style="font-weight:600;font-size:13px;color:var(--purple);">Power BI</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
+          <span style="font-weight:600;font-size:13px;color:var(--purple);">Power BI Pro</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Power BI Pro (included in E5)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Power BI Pro included in M365 E5 — covers report sharing and consumption. DirectLake mode requires the Fabric capacity SKU (same as Fabric above).</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Add-On Required (~$10/user/mo)</div>
+        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--amber);">NOT included in Business Premium.</strong> Requires a separate Power BI Pro per-user add-on for report sharing and consumption.</div>
       </div>
 
       <!-- Purview -->
       <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">🛡️</span>
-          <span style="font-weight:600;font-size:13px;color:var(--green);">Microsoft Purview</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
-        </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">Microsoft Purview (included in E5)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Information Protection, DLP, and sensitivity labels included in E5 via Microsoft Purview. Advanced compliance features (eDiscovery, Audit Premium) also included.</div>
-      </div>
-
-      <!-- Copilot Studio (optional) -->
-      <div style="background:var(--surface2);border:1px dashed var(--border2);border-radius:8px;padding:10px 13px;">
-        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
-          <span style="font-size:15px;">🤖</span>
-          <span style="font-weight:600;font-size:13px;color:var(--ink3);">Copilot Studio</span>
+          <span style="font-weight:600;font-size:13px;color:var(--green);">Purview (AIP P1)</span>
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink4);letter-spacing:0.05em;margin-bottom:3px;">Copilot Studio (add-on · Phase 2 optional)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Not included in E5. Requires a Copilot Studio per-user or message-capacity license. Only needed if adding a conversational agent layer (Phase 2 optional).</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">Azure Information Protection P1</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Basic sensitivity labels (AIP P1) included. No eDiscovery Premium, Audit Premium, or automated DLP for Teams — manual labelling only.</div>
       </div>
 
+      <!-- Defender for Business — BP EXCLUSIVE -->
+      <div style="background:var(--purple-bg);border:2px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🛡️</span>
+          <span style="font-weight:600;font-size:13px;color:var(--purple);">Defender for Business</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--purple);color:#fff;padding:2px 5px;border-radius:3px;flex-shrink:0;">✦ BP ONLY</span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">BP Exclusive — not in E3</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Endpoint threat protection and vulnerability management included. Use as compensating SIEM control (replaces Sentinel). Integrate device compliance with Conditional Access.</div>
+      </div>
+
+      <!-- Intune — BP EXCLUSIVE -->
+      <div style="background:var(--purple-bg);border:2px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">📱</span>
+          <span style="font-weight:600;font-size:13px;color:var(--purple);">Microsoft Intune</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--purple);color:#fff;padding:2px 5px;border-radius:3px;flex-shrink:0;">✦ BP ONLY</span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">BP Exclusive — not in E3</div>
+        <div style="font-size:11.5px;color:var(--ink3);">MDM + MAM included. Enforce device compliance policies on Power Apps and Teams access — critical for Ontario One Call field crews on mobile devices.</div>
+      </div>
+
+      <!-- 300-user cap -->
+      <div style="background:var(--amber-bg);border:1px dashed var(--amber-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">👥</span>
+          <span style="font-weight:600;font-size:13px;color:var(--amber);">300-User Cap</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:0.05em;margin-bottom:3px;">Business Premium Plan Limit</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Business Premium is capped at 300 users per tenant. Monitor cumulative user count as projects grow. Plan migration to E3 or E5 if approaching the limit.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BP CRITICAL NOTICE -->
+  <div style="background:#fcedf0;border-left:4px solid #b02a2a;border-bottom:1px solid #f0a8b4;padding:14px 44px;display:flex;align-items:flex-start;gap:14px;">
+    <span style="font-size:20px;flex-shrink:0;">🚨</span>
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#b02a2a;margin-bottom:5px;">Critical — Must Read Before Phase 2</div>
+      <div style="font-size:13px;color:#5a1a1a;line-height:1.65;max-width:860px;"><strong>Business Premium ships with Dataverse for Teams only — not full Dataverse.</strong> The Fabric zero-copy link (Phase 4), server-side security roles (Phase 6), and production storage all require full standalone Dataverse. Before proceeding past Phase 1, add the <strong>Power Apps per-user plan (~$20/user/month)</strong> and confirm your Power Platform environment type reads "Production" or "Sandbox" — not "Teams" — in the Power Platform Admin Center.</div>
     </div>
   </div>
 
@@ -659,15 +694,18 @@ code {
         <div class="phase-hdr"><span class="ph-num">01</span><h2 class="ph-title">Pre-Setup &amp; Access Provisioning</h2><span class="ph-tag pht-green">Setup</span></div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-g">1.1</div><div class="smeta"><div class="stool">TOOL · Microsoft Admin Center + Entra ID</div><div class="stitle">Confirm M365 E5 Licenses &amp; Roles</div><div class="sdesc">Verify every PM and contributor has the right license before touching any tool.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-g">1.1</div><div class="smeta"><div class="stool">TOOL · Microsoft Admin Center + Entra ID</div><div class="stitle">Confirm Business Premium Licenses &amp; Required Add-Ons</div><div class="sdesc">Verify every PM and contributor has the right license — including mandatory add-ons — before touching any tool.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm all PMs have <strong>M365 E5 licenses</strong> in Admin Center (<code>admin.microsoft.com</code>)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm all PMs have <strong>M365 Business Premium licenses</strong> in Admin Center (<code>admin.microsoft.com</code>) — max 300 users on this plan</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Purchase and assign <strong>Power Apps per-user plan</strong> (~$20/user/month) for all builders and intake users — this is mandatory to unlock full Dataverse; do not skip</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Purchase and assign <strong>Power BI Pro add-on</strong> (~$10/user/month) for all report consumers — not included in Business Premium</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm <strong>Microsoft Fabric capacity</strong> (F2+ SKU) is purchased and assigned to your workspace — separate Azure purchase</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assign <strong>Power Platform Environment Maker</strong> role to the PM or designated builder</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm <strong>Microsoft Fabric capacity</strong> (F2+ SKU) is assigned to your workspace</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Enable <strong>Dataverse</strong> for the Power Platform environment (requires Global Admin)</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Ensure <strong>Conditional Access + MFA</strong> is active in Entra ID for all participants</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Enable <strong>full Dataverse</strong> (standalone, not Teams) for the Power Platform environment — only available after Power Apps per-user plan is assigned</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Ensure <strong>MFA + Conditional Access</strong> is active via Entra ID P1 — pair with Intune device compliance policies</span></li>
             </ul>
+            <div class="note warn"><span>⚠️</span><p><strong>Do NOT build on Dataverse for Teams.</strong> It cannot be linked to Fabric, has a 2 GB storage cap, and does not support the security role model required here. Confirm the environment type shows "Production" or "Sandbox" — not "Teams" — in the Power Platform Admin Center before proceeding.</p></div>
             <div class="note ok"><span>💡</span><p>Document your environment name and region. Every project reuses the same Power Platform environment — don't create a new one per project.</p></div>
           </div>
         </div>
@@ -686,6 +724,25 @@ code {
         </div>
       </section>
 
+      <!-- PHASE 1 EXTRA: Intune Device Compliance -->
+      <section class="phase">
+        <div class="phase-hdr"><span class="ph-num">01</span><h2 class="ph-title">Configure Device Compliance (Intune) &nbsp;<span style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--purple);background:var(--purple-bg);border:1px solid var(--purple-bd);padding:2px 7px;border-radius:4px;">✦ BP Exclusive</span></h2><span class="ph-tag pht-purple">Security</span></div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-p">1.3</div><div class="smeta"><div class="stool">TOOL · Microsoft Intune + Entra ID P1</div><div class="stitle">Enforce Compliant-Device Access to the Intake Platform</div><div class="sdesc">Leverage Intune — included exclusively in Business Premium — to gate Power Apps and Teams access to compliant devices only.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In <code>intune.microsoft.com</code> → <strong>Devices → Compliance Policies → Create Policy</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Require: BitLocker enabled · OS minimum version · Defender for Business reporting healthy</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Entra ID → <strong>Conditional Access → New Policy</strong> → target Power Apps and Teams → require device compliance</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assign Intune <strong>app protection policies</strong> to the Power Apps mobile app for field crew devices</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Enroll all PM and contributor devices in Intune before go-live; verify non-compliant devices are blocked</span></li>
+            </ul>
+            <div class="note purple"><span>✦</span><p>This step is exclusive to Business Premium — E3 does not include Intune. It adds meaningful endpoint security depth for Ontario One Call's field-facing workflows at no extra licensing cost.</p></div>
+          </div>
+        </div>
+      </section>
+
       <!-- PHASE 2 -->
       <section class="phase" id="s-p2">
         <div class="phase-hdr"><span class="ph-num">02</span><h2 class="ph-title">Build the Intake UI in Power Apps</h2><span class="ph-tag pht-blue">Build</span></div>
@@ -694,6 +751,7 @@ code {
           <div class="step-hdr"><div class="snum sn-b">2.1</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio (make.powerapps.com)</div><div class="stitle">Create the Canvas App from Template</div><div class="sdesc">Build the intake form as a Canvas App — the reusable UI template for all projects.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm you are working in the <strong>full Dataverse environment</strong> — check the environment picker top-right; it must NOT read "Teams"</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Go to <code>make.powerapps.com</code> → <strong>+ Create → Canvas App from blank</strong></span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Name the master template: <code>IntakeForm-MASTER-Template</code></span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Build a <strong>multi-screen wizard</strong>: Screen 1 = Project Info · Screen 2 = Financial Details · Screen 3 = Review &amp; Submit</span></li>
@@ -750,6 +808,7 @@ code {
           <div class="step-hdr"><div class="snum sn-a">4.1</div><div class="smeta"><div class="stool">TOOL · Microsoft Fabric · Link to Dataverse</div><div class="stitle">Zero-Copy Link: Dataverse → OneLake</div><div class="sdesc">Connect Dataverse directly to Fabric — no ETL, no pipeline, near real-time.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm the Dataverse environment type is <strong>standalone (full)</strong> — Power Platform Admin Center → Environments → Type must read "Production" or "Sandbox", not "Teams"</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Fabric Lakehouse → <strong>Get Data → Dataverse</strong> → select your environment</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Select the <strong>intake request table</strong> → enable <strong>"Link to Microsoft Fabric"</strong></span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm the table shortcut appears in <strong>OneLake → Tables</strong></span></li>
@@ -757,6 +816,7 @@ code {
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Create per-project SQL views in the Lakehouse SQL endpoint: <code>vw_PRJ[Code]_Intake</code></span></li>
             </ul>
             <div class="note ok"><span>✅</span><p>The link is near-real-time. Data submitted in Power Apps is queryable in Fabric within seconds — no scheduled refresh needed.</p></div>
+            <div class="note warn"><span>⚠️</span><p>If this step fails with an environment type error, the Dataverse environment is still a Teams environment. Return to Phase 1 Step 1.1 — provision a full Power Platform environment with the Power Apps per-user plan assigned first.</p></div>
           </div>
         </div>
       </section>
@@ -783,7 +843,7 @@ code {
       <section class="phase" id="s-p6">
         <div class="phase-hdr"><span class="ph-num">06</span><h2 class="ph-title">Security &amp; Governance</h2><span class="ph-tag pht-rose">Security</span></div>
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-r">6.1</div><div class="smeta"><div class="stool">TOOL · Purview + Dataverse Security Roles + Entra ID</div><div class="stitle">Financial Data Security — Full Layer Checklist</div><div class="sdesc">Enforce security at every layer: app, write, read, and audit.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-r">6.1</div><div class="smeta"><div class="stool">TOOL · Entra ID P1 + Intune + Defender for Business + Dataverse RLS + Purview AIP P1</div><div class="stitle">Financial Data Security — Business Premium Layer Checklist</div><div class="sdesc">Enforce security at every layer using Business Premium's full toolkit including Defender for Business and Intune.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <table class="dt">
               <thead><tr><th>Layer</th><th>Tool</th><th>Action</th></tr></thead>
@@ -793,7 +853,9 @@ code {
                 <tr><td>Write</td><td>Dataverse RLS</td><td>Security roles per project — server-side enforcement</td></tr>
                 <tr><td>Read</td><td>Power BI RLS</td><td>Semantic model role scoped by project_code</td></tr>
                 <tr><td>Classification</td><td>Purview</td><td>"Financial – Confidential" sensitivity labels</td></tr>
-                <tr><td>Audit</td><td>Sentinel (E5)</td><td>Route Dataverse + Fabric logs to Sentinel</td></tr>
+                <tr><td>Endpoint ✦</td><td>Intune (BP exclusive)</td><td>Require compliant device via Conditional Access policy on Power Apps and Teams</td></tr>
+                <tr><td>Threat Detection ✦</td><td>Defender for Business (BP exclusive)</td><td>Endpoint protection; alerts route to IT as compensating SIEM control (no Sentinel in BP)</td></tr>
+                <tr><td>Audit</td><td>Purview Audit Standard</td><td>Route Dataverse + Power Platform logs to Purview Audit (Sentinel not available in BP)</td></tr>
               </tbody>
             </table>
           </div>
@@ -807,6 +869,7 @@ code {
           <div class="step-hdr"><div class="snum sn-a">7.1</div><div class="smeta"><div class="stool">TOOL · Power BI + Fabric Semantic Model (DirectLake)</div><div class="stitle">Build the Multi-Project PM Dashboard</div><div class="sdesc">One report, all projects — each PM scoped to their own data via RLS.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm <strong>Power BI Pro add-on</strong> is assigned to all report builders and consumers — ~$10/user/month, not included in Business Premium</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Fabric workspace: <strong>New → Semantic Model</strong> → connect to Lakehouse <code>vw_AllProjects_Summary</code></span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add RLS role: <code>ProjectMember</code> filtered by <code>[ProjectCode] = USERNAME()</code></span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Build report: intake volume · approval funnel · financial totals · submission trend</span></li>
@@ -824,14 +887,15 @@ code {
           <div class="sbody">
             <ul class="cl">
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>1 — Register:</strong> Add <code>ProjectCode</code> to Power Apps dropdown lookup table</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>2 — Security:</strong> Create Entra ID group <code>SG-PRJ[Code]-Members</code> and assign users</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>2 — Security:</strong> Create Entra ID group <code>SG-PRJ[Code]-Members</code>, assign users, confirm all devices are enrolled in Intune</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>3 — Dataverse role:</strong> Duplicate template role → rename <code>Role-PRJ[Code]-Member</code> → assign group</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>4 — Fabric view:</strong> Create <code>vw_PRJ[Code]_Intake</code> in Lakehouse SQL endpoint</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>5 — Power BI RLS:</strong> Add project code to semantic model role mapping</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>6 — Teams channel:</strong> Create <code>PRJ-[Code]</code> channel · pin intake app + report as tabs</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>7 — Test:</strong> Submit test record · verify approval fires · confirm data in Fabric report</span></li>
             </ul>
-            <div class="note ok"><span>🚀</span><p><strong>Target: under 1 hour per new project.</strong> All infrastructure is already running — you're only registering a project code and configuring access.</p></div>
+            <div class="note ok"><span>🚀</span><p><strong>Target: under 1 hour per new project.</strong> All infrastructure is already running — you're only registering a project code and configuring access. Monitor cumulative user count against the 300-user Business Premium cap.</p></div>
+            <div class="note warn"><span>⚠️</span><p>If you are approaching 300 users, plan a migration to M365 E3 or E5 before hitting the cap. Business Premium cannot exceed this limit.</p></div>
           </div>
         </div>
       </section>
@@ -1040,7 +1104,8 @@ code {
           <div class="layer-body">
             <div class="layer-chip"><span class="lc-icon">🎨</span> Power Apps Canvas App</div>
             <div class="layer-chip"><span class="lc-icon">💬</span> Microsoft Teams Tab</div>
-            <div class="layer-chip"><span class="lc-icon">🔐</span> Entra ID SSO</div>
+            <div class="layer-chip"><span class="lc-icon">🔐</span> Entra ID P1 SSO</div>
+            <div class="layer-chip" style="background:var(--purple-bg);border-color:var(--purple-bd);color:var(--purple);"><span class="lc-icon">📱</span> Intune Device Gate ✦</div>
             <div class="layer-desc">User opens the intake form in Teams (or Power Apps). Entra ID authenticates silently. Multi-screen wizard collects structured data including financial fields. On submit, the form calls <code>Patch()</code> to write directly into Dataverse. <strong>PM owns this layer.</strong></div>
           </div>
         </div>
@@ -1064,14 +1129,14 @@ code {
 
         <div class="layer l-dv">
           <div class="layer-label">
-            <div class="ll-tag">Layer 3</div>
-            <div class="ll-name">Operational Store</div>
+            <div class="ll-tag">Layer 3 ⚠</div>
+            <div class="ll-name">Full Dataverse<br><span style="font-size:10px;color:var(--amber);font-weight:400;">Add-on required</span></div>
           </div>
           <div class="layer-body">
-            <div class="layer-chip"><span class="lc-icon">🗄️</span> Dataverse Table</div>
+            <div class="layer-chip"><span class="lc-icon">🗄️</span> Full Dataverse Table</div>
             <div class="layer-chip"><span class="lc-icon">🔒</span> Row-Level Security</div>
             <div class="layer-chip"><span class="lc-icon">📝</span> Change Tracking</div>
-            <div class="layer-chip"><span class="lc-icon">🛡️</span> Purview Labels</div>
+            <div class="layer-chip" style="background:var(--amber-bg);border-color:var(--amber-bd);color:var(--amber);">⚠ Power Apps per-user add-on</div>
             <div class="layer-desc">All intake records land here. Dataverse enforces server-side business rules, field-level security, and maintains a full audit log. Financial fields are tagged with Purview sensitivity labels. Data is partitioned by <code>cr_projectcode</code> for multi-project isolation. <strong>DE creates schema; Dataverse manages it.</strong></div>
           </div>
         </div>
@@ -1158,7 +1223,7 @@ code {
   <div class="panel-header">
     <div class="ph-kicker">Architecture Decision Matrix · All Three Options Compared</div>
     <h1>Which Architecture<br>Should You Choose?</h1>
-    <p>A structured comparison across licensing, complexity, security, resilience, and Fabric integration — built to inform stakeholder decisions. Power Apps → Dataverse → Fabric is the selected approach for this platform.</p>
+    <p>A structured comparison across licensing, complexity, security, resilience, and Fabric integration — built for stakeholder decisions under M365 Business Premium. Option 1 remains the right choice, but requires the Power Apps per-user add-on to unlock full Dataverse.</p>
     <div class="chosen-badge">✓ Selected Architecture — Power Apps → Dataverse → Fabric Zero-Copy Link</div>
   </div>
 
@@ -1169,7 +1234,7 @@ code {
       <div class="opt-card chosen">
         <div class="oc-crown">✓ CHOSEN</div>
         <div class="oc-num">// OPTION 01</div>
-        <div class="oc-title">Power Apps →<br>Dataverse → Fabric</div>
+        <div class="oc-title">Power Apps →<br>Full Dataverse → Fabric</div>
         <div class="oc-stack" style="margin-top:6px;">Canvas App · Dataverse · Zero-Copy Link · Power BI</div>
       </div>
       <div class="opt-card not-chosen">
@@ -1189,7 +1254,7 @@ code {
       <div class="rb-icon">✅</div>
       <div class="rb-text">
         <h3>Selected Architecture: Power Apps → Dataverse → Fabric</h3>
-        <p>For a <strong>PM-led, multi-project intake platform handling financial data on M365 E5</strong>, Option 1 is the clear choice. Fully covered by existing E5 licensing, delivers the strongest security for financial data, connects to Fabric via zero-copy link with zero ETL, and is maintainable by a Power Platform maker without data engineering skills. Option 2 requires Premium licensing, introduces 30–90 second submission latency, and rebuilds what Dataverse gives for free. Option 3 is suitable only for low-sensitivity, low-volume prototyping.</p>
+        <p>For a <strong>PM-led, multi-project intake platform handling financial data on M365 Business Premium</strong>, Option 1 remains the right architecture — but only with the Power Apps per-user add-on (∼$20/user/month) to unlock full Dataverse. Base Business Premium ships with Dataverse for Teams only, which cannot support the Fabric zero-copy link. Option 2 requires PA Premium and introduces 30–90s submission latency. Option 3 avoids the Dataverse add-on entirely but cannot support financial-grade row-level security.</p>
       </div>
     </div>
 
@@ -1272,7 +1337,7 @@ code {
       <table class="mxtable">
         <thead><tr><th>Dimension</th><th class="mth-g">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-b">Option 3 · SharePoint</th></tr></thead>
         <tbody>
-          <tr><td>Licensing fit (E5)</td>
+          <tr><td>Licensing fit (BP + add-on)</td>
             <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">10/10</span></div></td>
             <td><div class="sbar"><div class="strack"><div class="sfill" style="width:60%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">6/10</span></div></td>
             <td><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">10/10</span></div></td>
@@ -1304,8 +1369,8 @@ code {
           </tr>
           <tr style="border-top:2px solid var(--border2);">
             <td><strong>Total (weighted)</strong></td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:93%;background:var(--green)"></div></div><span class="sval" style="color:var(--green);font-weight:700;font-size:13px;">55/60</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:57%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber);font-weight:700;font-size:13px;">34/60</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:93%;background:var(--green)"></div></div><span class="sval" style="color:var(--green);font-weight:700;font-size:13px;">51/60</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:57%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber);font-weight:700;font-size:13px;">30/60</span></div></td>
             <td><div class="sbar"><div class="strack"><div class="sfill" style="width:68%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue);font-weight:700;font-size:13px;">41/60</span></div></td>
           </tr>
         </tbody>
@@ -1318,7 +1383,10 @@ code {
       <table class="mxtable">
         <thead><tr><th>Risk</th><th class="mth-g">Option 1</th><th class="mth-a">Option 2</th><th class="mth-b">Option 3</th></tr></thead>
         <tbody>
-          <tr><td>Premium license blocker</td><td class="chosen-col"><span class="tag-y">Not applicable</span></td><td><span class="tag-n">🔴 Critical</span></td><td><span class="tag-y">Not applicable</span></td></tr>
+          <tr><td>Dataverse for Teams used by mistake</td><td class="chosen-col"><span class="tag-n">🔴 Critical — blocks Fabric link entirely</span></td><td>N/A</td><td>N/A</td></tr>
+          <tr><td>Power Apps per-user add-on missing</td><td class="chosen-col"><span class="tag-n">🔴 Critical — full Dataverse unavailable</span></td><td>N/A</td><td><span class="tag-y">Not applicable</span></td></tr>
+          <tr><td>300-user cap exceeded</td><td class="chosen-col"><span class="tag-w">🟠 Monitor — plan E3/E5 migration</span></td><td><span class="tag-w">🟠 Same</span></td><td><span class="tag-w">🟠 Same</span></td></tr>
+          <tr><td>PA Premium license blocker</td><td class="chosen-col"><span class="tag-y">Not applicable</span></td><td><span class="tag-n">🔴 Critical</span></td><td><span class="tag-y">Not applicable</span></td></tr>
           <tr><td>Slow submission UX</td><td class="chosen-col"><span class="tag-y">Low risk</span></td><td><span class="tag-n">🔴 30–90s latency</span></td><td><span class="tag-y">Low risk</span></td></tr>
           <tr><td>Financial data bypass</td><td class="chosen-col"><span class="tag-y">Server-side rules</span></td><td><span class="tag-w">🟠 App-side only</span></td><td><span class="tag-w">🟠 App-side only</span></td></tr>
           <tr><td>Auth credential expiry outage</td><td class="chosen-col"><span class="tag-y">Not applicable</span></td><td><span class="tag-n">🟠 Client secret expires</span></td><td><span class="tag-y">Low risk</span></td></tr>
@@ -1330,7 +1398,7 @@ code {
     </div>
 
     <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink4);border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
-      // Generated for M365 E5 + Microsoft Fabric intake platform · Power Apps Canvas App · Multi-project PM template · Option 1 selected
+      // Generated for Ontario One Call · M365 Business Premium + Microsoft Fabric · Power Apps per-user add-on required for full Dataverse
     </div>
 
   </div>
@@ -1378,5 +1446,8 @@ code {
     });
   });
 </script>
+  <div style="background:var(--ink);color:rgba(255,255,255,0.35);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-align:center;padding:16px;border-top:1px solid rgba(255,255,255,0.06);">
+    <span style="color:var(--ooc);font-weight:600;">Ontario One Call</span> &nbsp;·&nbsp; M365 Business Premium + Microsoft Fabric Platform Guide &nbsp;·&nbsp; Power Apps per-user add-on required for full Dataverse and Fabric zero-copy link
+  </div>
 </body>
 </html>
