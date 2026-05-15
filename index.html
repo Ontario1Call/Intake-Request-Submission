@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ontario One Call — M365 Business Premium Platform Guide</title>
+<title>M365 Business Premium — Canvas App Intake · SharePoint Guide</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
@@ -40,10 +40,10 @@
   --purple-bg:#f2eeff;
   --purple-bd:#c4a8f0;
 
-  --accent:   #2a7a4f;   /* primary accent = green (chosen option) */
-  --ooc:      #F26522;    /* Ontario One Call orange */
-  --ooc-bg:   #FEF0E8;
-  --ooc-bd:   #FDDCC8;
+  --accent:   #2a7a4f;
+  --ooc:      #0078d4;   /* Microsoft blue for this org */
+  --ooc-bg:   #e8f2fd;
+  --ooc-bd:   #b3d4f7;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,7 +53,6 @@ body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', s
 .tab-bar {
   background: var(--ink);
   display: flex; align-items: stretch;
-  padding: 0 0 0 0;
   position: sticky; top: 0; z-index: 100;
   box-shadow: 0 2px 12px rgba(0,0,0,0.18);
 }
@@ -118,8 +117,6 @@ body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', s
   letter-spacing: -0.025em; margin-bottom: 10px;
 }
 .panel-header p { color: var(--ink3); font-size: 14px; max-width: 620px; font-weight: 300; }
-
-/* ═══ CHOSEN BADGE ═══ */
 .chosen-badge {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--green-bg); border: 1px solid var(--green-bd);
@@ -152,7 +149,6 @@ body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', s
 .sb-item.active { background: var(--green-bg); color: var(--green); font-weight: 500; }
 .sb-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border2); flex-shrink: 0; }
 .sb-item.active .sb-dot { background: var(--green); }
-
 .main { flex: 1; padding: 36px 44px 80px 36px; min-width: 0; }
 
 /* ═══ PROGRESS ═══ */
@@ -207,7 +203,6 @@ body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', s
 .sn-a { color: var(--amber);  background: var(--amber-bg);  border-color: var(--amber-bd); }
 .sn-r { color: var(--rose);   background: var(--rose-bg);   border-color: var(--rose-bd); }
 .sn-p { color: var(--purple); background: var(--purple-bg); border-color: var(--purple-bd); }
-
 .smeta { flex: 1; min-width: 0; }
 .stool { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: var(--ink4); margin-bottom: 2px; }
 .stitle { font-size: 14px; font-weight: 600; color: var(--ink); }
@@ -256,26 +251,26 @@ code {
 .dt tr:last-child td { border: none; }
 .dt td:first-child { color: var(--ink); font-weight: 500; }
 
+/* ═══ CODE BLOCK ═══ */
+.codeblock {
+  background: #1c1a16; border-radius: 8px; padding: 14px 16px;
+  margin-top: 12px; overflow-x: auto;
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  line-height: 1.65; color: #c8f5d0;
+}
+.codeblock .cm { color: #7a9a82; }
+.codeblock .ck { color: #82b8fa; }
+.codeblock .cs { color: #f4b57a; }
 
 /* ══════════════════════════════════════
    COLLABORATION FLOW TAB
 ══════════════════════════════════════ */
 .collab-section { max-width: 1100px; margin: 0 auto; padding: 40px 44px 80px; }
-
 .swim-wrap { margin-bottom: 56px; }
-.swim-title {
-  font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
-  letter-spacing: -0.02em; margin-bottom: 4px;
-}
+.swim-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
 .swim-sub { font-size: 13px; color: var(--ink3); margin-bottom: 24px; }
-
-/* swimlane */
 .swimlane { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-.sl-header {
-  display: grid; align-items: center;
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  padding: 0;
-}
+.sl-header { display: grid; align-items: center; background: var(--surface); border-bottom: 1px solid var(--border); }
 .sl-role {
   padding: 12px 20px;
   font-family: 'IBM Plex Mono', monospace;
@@ -285,54 +280,34 @@ code {
 .sl-pm    { color: var(--blue);  background: var(--blue-bg); }
 .sl-de    { color: var(--green); background: var(--green-bg); }
 .sl-shared{ color: var(--purple);background: var(--purple-bg); }
-
 .sl-row { display: grid; }
-.sl-cell {
-  padding: 20px; border-right: 1px solid var(--border);
-  min-height: 80px;
-}
+.sl-cell { padding: 20px; border-right: 1px solid var(--border); min-height: 80px; }
 .sl-cell:last-child { border-right: none; }
 .sl-cell.pm-cell    { background: rgba(26,92,176,0.03); }
 .sl-cell.de-cell    { background: rgba(42,122,79,0.03); }
 .sl-cell.sh-cell    { background: rgba(90,58,176,0.03); }
 .sl-cell.empty      { background: var(--surface2); }
-
 .flow-step {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 13px; margin-bottom: 8px;
-  font-size: 12.5px;
+  border-radius: 8px; padding: 10px 13px; margin-bottom: 8px; font-size: 12.5px;
 }
 .flow-step:last-child { margin-bottom: 0; }
-.fs-num {
-  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
-  letter-spacing: 0.1em; color: var(--ink4); margin-bottom: 3px;
-}
+.fs-num { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--ink4); margin-bottom: 3px; }
 .fs-title { font-weight: 600; color: var(--ink); font-size: 13px; }
 .fs-body  { color: var(--ink3); font-size: 12px; margin-top: 3px; }
-
-.arrow-down {
-  text-align: center; color: var(--ink4); font-size: 20px;
-  padding: 4px 0; line-height: 1;
-}
-
-/* handoff badge */
 .handoff {
   display: flex; align-items: center; gap: 10px;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 16px; margin: 8px 0;
-  font-size: 12.5px;
+  border-radius: 8px; padding: 10px 16px; margin: 8px 0; font-size: 12.5px;
 }
 .ho-icon { font-size: 16px; flex-shrink: 0; }
 .ho-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--ink4); letter-spacing: 0.1em; }
 .ho-title { font-weight: 600; color: var(--ink); font-size: 13px; }
 .ho-desc  { color: var(--ink3); font-size: 12px; }
 
-/* ════════════════════════
-   DATA FLOW / LAYERS
-════════════════════════ */
+/* DATA FLOW LAYERS */
 .dataflow-wrap { margin-bottom: 56px; }
 .layer-stack { display: flex; flex-direction: column; gap: 3px; margin-top: 24px; }
-
 .layer {
   display: grid; grid-template-columns: 140px 1fr;
   border-radius: 10px; overflow: hidden;
@@ -340,20 +315,10 @@ code {
   transition: box-shadow 0.2s;
 }
 .layer:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.08); }
-.layer-label {
-  padding: 18px 16px;
-  display: flex; flex-direction: column; justify-content: center;
-  border-right: 1px solid var(--border);
-}
-.ll-tag {
-  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
-  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;
-}
+.layer-label { padding: 18px 16px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); }
+.ll-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
 .ll-name { font-weight: 600; font-size: 13px; }
-.layer-body {
-  padding: 16px 20px;
-  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-}
+.layer-body { padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .layer-chip {
   display: flex; align-items: center; gap: 6px;
   padding: 5px 10px; border-radius: 6px;
@@ -363,41 +328,31 @@ code {
 .layer-desc { width: 100%; font-size: 12px; color: var(--ink3); margin-top: 4px; }
 .layer-arrow { text-align: center; color: var(--green); font-size: 18px; padding: 4px 0; line-height: 1; }
 
-/* layer colours */
-.l-ui      { background: #f0f4ff; }
+.l-ui { background: #f0f4ff; }
 .l-ui .layer-label { background: #e8eeff; }
 .l-ui .ll-tag { color: var(--blue); }
 .l-ui .layer-chip { background: #eef2ff; border-color: #c0ccf8; color: var(--blue); }
 
-.l-pa      { background: #f5f2ff; }
+.l-pa { background: #f5f2ff; }
 .l-pa .layer-label { background: #ede8ff; }
 .l-pa .ll-tag { color: var(--purple); }
 .l-pa .layer-chip { background: #f0ecff; border-color: #c8b8f8; color: var(--purple); }
 
-.l-dv      { background: var(--green-bg); }
-.l-dv .layer-label { background: #dff0e8; }
-.l-dv .ll-tag { color: var(--green); }
-.l-dv .layer-chip { background: #eaf6f0; border-color: var(--green-bd); color: var(--green); }
+.l-sp { background: var(--blue-bg); }
+.l-sp .layer-label { background: #dceeff; }
+.l-sp .ll-tag { color: var(--blue); }
+.l-sp .layer-chip { background: #e8f2ff; border-color: var(--blue-bd); color: var(--blue); }
 
-.l-fl      { background: var(--amber-bg); }
-.l-fl .layer-label { background: #fdefd8; }
-.l-fl .ll-tag { color: var(--amber); }
-.l-fl .layer-chip { background: #fef3e2; border-color: var(--amber-bd); color: var(--amber); }
-
-.l-bi      { background: var(--rose-bg); }
+.l-bi { background: var(--rose-bg); }
 .l-bi .layer-label { background: #f8dde2; }
 .l-bi .ll-tag { color: var(--rose); }
 .l-bi .layer-chip { background: #fceef1; border-color: var(--rose-bd); color: var(--rose); }
 
 /* ingestion steps */
-.ingest-steps {
-  display: grid; grid-template-columns: repeat(5,1fr);
-  gap: 2px; margin-top: 24px;
-}
+.ingest-steps { display: grid; grid-template-columns: repeat(5,1fr); gap: 2px; margin-top: 24px; }
 .ingest-step {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 14px 12px; text-align: center;
-  position: relative;
+  border-radius: 8px; padding: 14px 12px; text-align: center; position: relative;
 }
 .ingest-step::after {
   content: '→'; position: absolute; right: -8px; top: 50%;
@@ -414,15 +369,8 @@ code {
    DECISION MATRIX TAB
 ══════════════════════ */
 .dm-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 44px 80px; }
-
-.opt-cards {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 14px; margin-bottom: 36px;
-}
-.opt-card {
-  border-radius: 10px; padding: 20px; border: 2px solid;
-  position: relative; overflow: hidden;
-}
+.opt-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 36px; }
+.opt-card { border-radius: 10px; padding: 20px; border: 2px solid; position: relative; overflow: hidden; }
 .opt-card.chosen { border-color: var(--green); background: var(--green-bg); }
 .opt-card.not-chosen { border-color: var(--border); background: var(--surface); opacity: 0.8; }
 .oc-crown {
@@ -435,7 +383,6 @@ code {
 .oc-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
 .oc-stack { font-size: 11px; color: var(--ink3); font-family: 'IBM Plex Mono', monospace; }
 
-/* matrix table */
 .mx-section { margin-bottom: 32px; }
 .mx-label {
   font-family: 'IBM Plex Mono', monospace; font-size: 9px;
@@ -470,7 +417,6 @@ code {
 .sfill  { height:100%;border-radius:2px; }
 .sval   { font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:32px;text-align:right; }
 
-/* recommendation banner */
 .rec-banner {
   background: var(--green-bg); border: 1px solid var(--green-bd);
   border-radius: 10px; padding: 24px 28px;
@@ -497,10 +443,13 @@ code {
 
 <!-- ═══ TAB BAR ═══ -->
 <div class="tab-bar">
-  <div class="tab-logo"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--ooc);border-radius:5px;font-size:11px;font-weight:800;color:#fff;font-family:'IBM Plex Mono',monospace;flex-shrink:0;letter-spacing:-0.02em;">ON1</span>&nbsp; Ontario One Call <span style="color:var(--ooc);">BP</span></div>
+  <div class="tab-logo">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--ooc);border-radius:5px;font-size:10px;font-weight:800;color:#fff;font-family:'IBM Plex Mono',monospace;flex-shrink:0;letter-spacing:-0.02em;">M365</span>
+    &nbsp; Canvas App Intake &nbsp;<span>SP Guide</span>
+  </div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('setup')">
-      <span class="tb-num">01</span> PM Setup Guide
+      <span class="tb-num">01</span> Setup Guide
     </button>
     <button class="tab-btn" onclick="switchTab('collab')">
       <span class="tb-num">02</span> Collaboration &amp; Data Flow
@@ -512,26 +461,26 @@ code {
 </div>
 
 
-<!-- ════════════════════════════════════
-     TAB 1 — PM SETUP GUIDE (OPTION 1)
-════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════
+     TAB 1 — SETUP GUIDE
+══════════════════════════════════════════ -->
 <div class="tab-panel active" id="tab-setup">
 
   <div class="panel-header">
-    <div class="ph-kicker">PM Getting Started Guide · M365 Business Premium · Microsoft Fabric</div>
-    <h1>Your M365 Business Premium<br>Intake Platform — <span style="color:var(--accent)">Setup Guide</span></h1>
-    <p>Step-by-step tool setup for running multiple projects across Ontario One Call operations on M365 Business Premium. Architecture accounts for Business Premium licensing boundaries — including the critical Dataverse constraint — and PM-led team capability. Stack: Power Apps → Full Dataverse (add-on required) → Fabric zero-copy link → Power BI.</p>
-    <div class="chosen-badge">✓ Selected Architecture — Dataverse + Fabric Zero-Copy Link</div>
+    <div class="ph-kicker">Intake Request Setup Guide · M365 Business Premium · No Extra Cost</div>
+    <h1>Canvas App Intake Platform —<br><span style="color:var(--accent)">SharePoint List Setup Guide</span></h1>
+    <p>Step-by-step setup for a fully functional intake request application using Power Apps Canvas App backed by SharePoint Lists. No Dataverse add-on required. No premium connectors. 100% covered by M365 Business Premium licensing.</p>
+    <div class="chosen-badge">✓ Selected Architecture — Canvas App + SharePoint List (Zero Extra Cost)</div>
   </div>
 
   <!-- LICENSE BAR -->
   <div style="background:var(--surface);border-bottom:1px solid var(--border);padding:0 44px;">
-    <div style="display:flex;align-items:center;gap:8px;padding:10px 0 6px;border-bottom:1px solid var(--border);">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink4);">License Requirements per Platform</span>
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 0 6px;border-bottom:1px solid var(--border);flex-wrap:wrap;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink4);">License Status per Component</span>
       <span style="font-size:11px;color:var(--ink4);">—</span>
-      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--green);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span> Included in Business Premium</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--green);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span> Included in M365 BP</span>
       <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--amber);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block;"></span> Requires Add-On</span>
-      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--rose);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--rose);display:inline-block;"></span> Not Included</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--rose);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--rose);display:inline-block;"></span> Not Needed (This Architecture)</span>
       <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--purple);font-weight:600;"><span style="width:8px;height:8px;border-radius:50%;background:var(--purple);display:inline-block;"></span> BP Exclusive Benefit</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;padding:14px 0 16px;">
@@ -544,7 +493,18 @@ code {
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
         </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">M365 BP · Power Apps for M365</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Included in Business Premium. Covers standard connectors + Canvas App creation. No per-app licensing for internal users on standard connectors.</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Included in Business Premium. Standard connectors + Canvas App creation. SharePoint connector is standard — no per-app licensing needed.</div>
+      </div>
+
+      <!-- SharePoint -->
+      <div style="background:var(--green-bg);border:2px solid var(--green-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">📋</span>
+          <span style="font-weight:600;font-size:13px;color:var(--green);">SharePoint Lists</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--green);color:#fff;padding:2px 5px;border-radius:3px;flex-shrink:0;">✓ BACKEND</span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">M365 BP · SharePoint Online</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Fully included. Item-level permissions, versioning, views. <strong style="color:var(--green);">Standard connector</strong> — zero premium cost. This is the zero-cost Dataverse alternative.</div>
       </div>
 
       <!-- Power Automate -->
@@ -555,87 +515,43 @@ code {
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
         </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Standard connectors (M365 plan)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Standard connectors included. Dataverse trigger and Approvals connector are standard — no Premium PA license needed for this architecture.</div>
+        <div style="font-size:11.5px;color:var(--ink3);">SharePoint trigger, Approvals connector, Teams notifications — all standard. No Power Automate Premium licence needed.</div>
       </div>
 
-      <!-- Dataverse CRITICAL -->
-      <div style="background:var(--rose-bg);border:2px solid var(--rose-bd);border-radius:8px;padding:10px 13px;">
+      <!-- Dataverse — NOT NEEDED -->
+      <div style="background:var(--surface2);border:1px dashed var(--border2);border-radius:8px;padding:10px 13px;opacity:0.7;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">🗄️</span>
-          <span style="font-weight:600;font-size:13px;color:var(--rose);">Microsoft Dataverse</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
+          <span style="font-weight:600;font-size:13px;color:var(--ink4);">Microsoft Dataverse</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--rose);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--rose);letter-spacing:0.05em;margin-bottom:3px;">⚠ Teams Only — Add-On Required</div>
-        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--rose);">BP includes Dataverse for Teams only.</strong> Full Dataverse required for Fabric link + RLS. Add Power Apps per-user plan (~$20/user/mo) to unlock.</div>
-      </div>
-
-      <!-- Fabric -->
-      <div style="background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:8px;padding:10px 13px;">
-        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
-          <span style="font-size:15px;">🏗️</span>
-          <span style="font-weight:600;font-size:13px;color:var(--amber);">Microsoft Fabric</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
-        </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:0.05em;margin-bottom:3px;">Fabric Capacity SKU — F2 minimum</div>
-        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--amber);">Not included in any M365 plan.</strong> Requires separate Fabric capacity SKU: F2 (dev/test) · F4+ (production).</div>
-      </div>
-
-      <!-- Entra ID -->
-      <div style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px;padding:10px 13px;">
-        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
-          <span style="font-size:15px;">🔐</span>
-          <span style="font-weight:600;font-size:13px;color:var(--blue);">Entra ID + MFA</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
-        </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">Microsoft Entra ID P1 (in BP)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Entra ID P1 included. Covers SSO, MFA, basic Conditional Access. <strong style="color:var(--amber);">No PIM or Identity Protection</strong> — P2 features not available in Business Premium.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink4);letter-spacing:0.05em;margin-bottom:3px;">Not Required — This Architecture</div>
+        <div style="font-size:11.5px;color:var(--ink3);">BP includes Dataverse for Teams only. Full Dataverse requires ~$20/user/mo add-on. <strong style="color:var(--rose);">Not needed here</strong> — SharePoint replaces it at zero cost.</div>
       </div>
 
       <!-- Teams -->
-      <div style="background:var(--rose-bg);border:1px solid var(--rose-bd);border-radius:8px;padding:10px 13px;">
+      <div style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">💬</span>
-          <span style="font-weight:600;font-size:13px;color:var(--rose);">Microsoft Teams</span>
+          <span style="font-weight:600;font-size:13px;color:var(--blue);">Microsoft Teams</span>
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--rose);letter-spacing:0.05em;margin-bottom:3px;">Included in M365 (all plans)</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Teams fully included. App pinning, channel tabs, and Adaptive Cards require no additional licensing.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:0.05em;margin-bottom:3px;">Included in M365 (all plans)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Teams fully included. App pinning, channel tabs, and Adaptive Card approvals require no additional licensing.</div>
       </div>
 
-      <!-- Power BI -->
-      <div style="background:var(--purple-bg);border:1px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
-        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
-          <span style="font-size:15px;">📊</span>
-          <span style="font-weight:600;font-size:13px;color:var(--purple);">Power BI Pro</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
-        </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">Add-On Required (~$10/user/mo)</div>
-        <div style="font-size:11.5px;color:var(--ink3);"><strong style="color:var(--amber);">NOT included in Business Premium.</strong> Requires a separate Power BI Pro per-user add-on for report sharing and consumption.</div>
-      </div>
-
-      <!-- Purview -->
+      <!-- Entra ID -->
       <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
-          <span style="font-size:15px;">🛡️</span>
-          <span style="font-weight:600;font-size:13px;color:var(--green);">Purview (AIP P1)</span>
-          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
+          <span style="font-size:15px;">🔐</span>
+          <span style="font-weight:600;font-size:13px;color:var(--green);">Entra ID + SSO</span>
+          <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">Azure Information Protection P1</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Basic sensitivity labels (AIP P1) included. No eDiscovery Premium, Audit Premium, or automated DLP for Teams — manual labelling only.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.05em;margin-bottom:3px;">Microsoft Entra ID P1 (in BP)</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Entra ID P1 included. SSO, MFA, Conditional Access. Power Apps in Teams authenticates silently — zero friction for users.</div>
       </div>
 
-      <!-- Defender for Business — BP EXCLUSIVE -->
-      <div style="background:var(--purple-bg);border:2px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
-        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
-          <span style="font-size:15px;">🛡️</span>
-          <span style="font-weight:600;font-size:13px;color:var(--purple);">Defender for Business</span>
-          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--purple);color:#fff;padding:2px 5px;border-radius:3px;flex-shrink:0;">✦ BP ONLY</span>
-        </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">BP Exclusive — not in E3</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Endpoint threat protection and vulnerability management included. Use as compensating SIEM control (replaces Sentinel). Integrate device compliance with Conditional Access.</div>
-      </div>
-
-      <!-- Intune — BP EXCLUSIVE -->
+      <!-- Intune BP EXCLUSIVE -->
       <div style="background:var(--purple-bg);border:2px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
           <span style="font-size:15px;">📱</span>
@@ -643,7 +559,18 @@ code {
           <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--purple);color:#fff;padding:2px 5px;border-radius:3px;flex-shrink:0;">✦ BP ONLY</span>
         </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">BP Exclusive — not in E3</div>
-        <div style="font-size:11.5px;color:var(--ink3);">MDM + MAM included. Enforce device compliance policies on Power Apps and Teams access — critical for Ontario One Call field crews on mobile devices.</div>
+        <div style="font-size:11.5px;color:var(--ink3);">MDM + MAM included. Enforce device compliance policies on Power Apps and Teams access. Pair with Conditional Access for mobile field staff.</div>
+      </div>
+
+      <!-- Defender BP EXCLUSIVE -->
+      <div style="background:var(--purple-bg);border:2px solid var(--purple-bd);border-radius:8px;padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span style="font-size:15px;">🛡️</span>
+          <span style="font-weight:600;font-size:13px;color:var(--purple);">Defender for Business</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--purple);color:#fff;padding:2px 5px;border-radius:3px;flex-shrink:0;">✦ BP ONLY</span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.05em;margin-bottom:3px;">BP Exclusive — not in E3</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Endpoint threat protection included. Use with Conditional Access to gate Power Apps to compliant, healthy devices only.</div>
       </div>
 
       <!-- 300-user cap -->
@@ -654,31 +581,31 @@ code {
           <span style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>
         </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:0.05em;margin-bottom:3px;">Business Premium Plan Limit</div>
-        <div style="font-size:11.5px;color:var(--ink3);">Business Premium is capped at 300 users per tenant. Monitor cumulative user count as projects grow. Plan migration to E3 or E5 if approaching the limit.</div>
+        <div style="font-size:11.5px;color:var(--ink3);">Business Premium is capped at 300 users per tenant. Monitor as your intake platform grows. Plan migration to E3/E5 if approaching the cap.</div>
       </div>
 
     </div>
   </div>
 
-  <!-- BP CRITICAL NOTICE -->
-  <div style="background:#fcedf0;border-left:4px solid #b02a2a;border-bottom:1px solid #f0a8b4;padding:14px 44px;display:flex;align-items:flex-start;gap:14px;">
-    <span style="font-size:20px;flex-shrink:0;">🚨</span>
+  <!-- ZERO-COST NOTICE -->
+  <div style="background:var(--green-bg);border-left:4px solid var(--green);border-bottom:1px solid var(--green-bd);padding:14px 44px;display:flex;align-items:flex-start;gap:14px;">
+    <span style="font-size:20px;flex-shrink:0;">✅</span>
     <div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#b02a2a;margin-bottom:5px;">Critical — Must Read Before Phase 2</div>
-      <div style="font-size:13px;color:#5a1a1a;line-height:1.65;max-width:860px;"><strong>Business Premium ships with Dataverse for Teams only — not full Dataverse.</strong> The Fabric zero-copy link (Phase 4), server-side security roles (Phase 6), and production storage all require full standalone Dataverse. Before proceeding past Phase 1, add the <strong>Power Apps per-user plan (~$20/user/month)</strong> and confirm your Power Platform environment type reads "Production" or "Sandbox" — not "Teams" — in the Power Platform Admin Center.</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:5px;">Zero Extra Cost — Read Before You Start</div>
+      <div style="font-size:13px;color:#1a4a30;line-height:1.65;max-width:860px;"><strong>This entire architecture runs on M365 Business Premium with no add-ons required.</strong> Power Apps Canvas App uses the <strong>SharePoint standard connector</strong> as the data backend — not Dataverse. Power Automate approval flows use the <strong>SharePoint trigger + Approvals connector</strong> (both standard). Every user with an M365 Business Premium licence can submit, view, and approve intake requests at <strong>zero additional licensing cost.</strong></div>
     </div>
   </div>
 
   <div class="layout">
     <nav class="sidebar">
       <div class="sb-label">Phases</div>
-      <a class="sb-item active" href="#s-p1"><span class="sb-dot"></span>1 · Pre-Setup</a>
-      <a class="sb-item" href="#s-p2"><span class="sb-dot"></span>2 · Build UI</a>
-      <a class="sb-item" href="#s-p3"><span class="sb-dot"></span>3 · Dataverse</a>
-      <a class="sb-item" href="#s-p4"><span class="sb-dot"></span>4 · Fabric Link</a>
-      <a class="sb-item" href="#s-p5"><span class="sb-dot"></span>5 · Automation</a>
+      <a class="sb-item active" href="#s-p1"><span class="sb-dot"></span>1 · SharePoint Setup</a>
+      <a class="sb-item" href="#s-p2"><span class="sb-dot"></span>2 · Canvas App</a>
+      <a class="sb-item" href="#s-p3"><span class="sb-dot"></span>3 · SP Schema</a>
+      <a class="sb-item" href="#s-p4"><span class="sb-dot"></span>4 · App Screens</a>
+      <a class="sb-item" href="#s-p5"><span class="sb-dot"></span>5 · Approval Flow</a>
       <a class="sb-item" href="#s-p6"><span class="sb-dot"></span>6 · Security</a>
-      <a class="sb-item" href="#s-p7"><span class="sb-dot"></span>7 · Reporting</a>
+      <a class="sb-item" href="#s-p7"><span class="sb-dot"></span>7 · Teams Deploy</a>
       <a class="sb-item" href="#s-p8"><span class="sb-dot"></span>8 · Scale</a>
     </nav>
 
@@ -691,150 +618,213 @@ code {
 
       <!-- PHASE 1 -->
       <section class="phase" id="s-p1">
-        <div class="phase-hdr"><span class="ph-num">01</span><h2 class="ph-title">Pre-Setup &amp; Access Provisioning</h2><span class="ph-tag pht-green">Setup</span></div>
+        <div class="phase-hdr"><span class="ph-num">01</span><h2 class="ph-title">SharePoint Site &amp; List Setup</h2><span class="ph-tag pht-green">Setup</span></div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-g">1.1</div><div class="smeta"><div class="stool">TOOL · Microsoft Admin Center + Entra ID</div><div class="stitle">Confirm Business Premium Licenses &amp; Required Add-Ons</div><div class="sdesc">Verify every PM and contributor has the right license — including mandatory add-ons — before touching any tool.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-g">1.1</div><div class="smeta"><div class="stool">TOOL · SharePoint Admin (sharepoint.com)</div><div class="stitle">Create the Intake SharePoint Site</div><div class="sdesc">Create a dedicated private Team Site to house all intake list data — keeps permissions clean and separate.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm all PMs have <strong>M365 Business Premium licenses</strong> in Admin Center (<code>admin.microsoft.com</code>) — max 300 users on this plan</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Purchase and assign <strong>Power Apps per-user plan</strong> (~$20/user/month) for all builders and intake users — this is mandatory to unlock full Dataverse; do not skip</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Purchase and assign <strong>Power BI Pro add-on</strong> (~$10/user/month) for all report consumers — not included in Business Premium</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm <strong>Microsoft Fabric capacity</strong> (F2+ SKU) is purchased and assigned to your workspace — separate Azure purchase</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assign <strong>Power Platform Environment Maker</strong> role to the PM or designated builder</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Enable <strong>full Dataverse</strong> (standalone, not Teams) for the Power Platform environment — only available after Power Apps per-user plan is assigned</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Ensure <strong>MFA + Conditional Access</strong> is active via Entra ID P1 — pair with Intune device compliance policies</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Go to <code>sharepoint.com</code> → <strong>+ Create site → Team site</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Name: <code>IntakeRequests-[OrgName]</code> · Privacy: <strong>Private</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add <strong>Site Owners</strong> (admins) and <strong>Site Members</strong> (all staff who can submit requests)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Inside the site → <strong>+ New → List → Blank list</strong> → name: <code>IntakeRequests</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Enable versioning: List Settings → Versioning Settings → <strong>Create a version each time you edit an item</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Set item-level permissions: List Settings → Advanced Settings → <strong>Read items that were created by the user</strong></span></li>
             </ul>
-            <div class="note warn"><span>⚠️</span><p><strong>Do NOT build on Dataverse for Teams.</strong> It cannot be linked to Fabric, has a 2 GB storage cap, and does not support the security role model required here. Confirm the environment type shows "Production" or "Sandbox" — not "Teams" — in the Power Platform Admin Center before proceeding.</p></div>
-            <div class="note ok"><span>💡</span><p>Document your environment name and region. Every project reuses the same Power Platform environment — don't create a new one per project.</p></div>
+            <div class="note warn"><span>⚠️</span><p>Item-level permissions limit what submitters can see. The Power Automate service account and approvers need <strong>Contribute</strong> access or higher to update Status and ApprovedBy columns after approval.</p></div>
+            <div class="note tip"><span>💡</span><p>One site can hold multiple intake lists (IT Requests, HR Requests, Facilities). Use one Canvas App with a <code>RequestType</code> dropdown to route to different lists, or one list with a category column.</p></div>
           </div>
         </div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-g">1.2</div><div class="smeta"><div class="stool">TOOL · Microsoft Fabric Workspace</div><div class="stitle">Create the Fabric Workspace (One per Project)</div><div class="sdesc">Set up a dedicated Fabric workspace as the data backend for each project.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-g">1.2</div><div class="smeta"><div class="stool">TOOL · SharePoint List · Column Settings</div><div class="stitle">Create List Views for Approvers &amp; Submitters</div><div class="sdesc">Configure filtered views so each role sees only what they need — no extra apps or dashboards required.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Go to <code>app.fabric.microsoft.com</code> → <strong>Workspaces → New Workspace</strong></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Name convention: <code>PRJ-[ProjectCode]-Workspace</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assign Fabric capacity to the workspace (F2+ SKU — not Trial)</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Create a <strong>Lakehouse</strong> inside: <code>PRJ-[ProjectCode]-Lakehouse</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add PM and data team as <strong>Workspace Members or Contributors</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>My Requests</strong> view — filter: <code>RequestedBy = [Me]</code> · Default view for submitters</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>Pending Approval</strong> view — filter: <code>Status = Submitted</code> · For approvers</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>All Requests</strong> view — no filter · Admin-only access via SharePoint permissions</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>By Department</strong> view — group by <code>Department</code> column · For admin reporting</span></li>
             </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- PHASE 1 EXTRA: Intune Device Compliance -->
-      <section class="phase">
-        <div class="phase-hdr"><span class="ph-num">01</span><h2 class="ph-title">Configure Device Compliance (Intune) &nbsp;<span style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--purple);background:var(--purple-bg);border:1px solid var(--purple-bd);padding:2px 7px;border-radius:4px;">✦ BP Exclusive</span></h2><span class="ph-tag pht-purple">Security</span></div>
-
-        <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-p">1.3</div><div class="smeta"><div class="stool">TOOL · Microsoft Intune + Entra ID P1</div><div class="stitle">Enforce Compliant-Device Access to the Intake Platform</div><div class="sdesc">Leverage Intune — included exclusively in Business Premium — to gate Power Apps and Teams access to compliant devices only.</div></div><span class="schev">▾</span></div>
-          <div class="sbody">
-            <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In <code>intune.microsoft.com</code> → <strong>Devices → Compliance Policies → Create Policy</strong></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Require: BitLocker enabled · OS minimum version · Defender for Business reporting healthy</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Entra ID → <strong>Conditional Access → New Policy</strong> → target Power Apps and Teams → require device compliance</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assign Intune <strong>app protection policies</strong> to the Power Apps mobile app for field crew devices</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Enroll all PM and contributor devices in Intune before go-live; verify non-compliant devices are blocked</span></li>
-            </ul>
-            <div class="note purple"><span>✦</span><p>This step is exclusive to Business Premium — E3 does not include Intune. It adds meaningful endpoint security depth for Ontario One Call's field-facing workflows at no extra licensing cost.</p></div>
+            <div class="note ok"><span>💡</span><p>Power Apps will bypass these views and filter records directly via formula. The views are for admins and approvers who review the list in SharePoint directly.</p></div>
           </div>
         </div>
       </section>
 
       <!-- PHASE 2 -->
       <section class="phase" id="s-p2">
-        <div class="phase-hdr"><span class="ph-num">02</span><h2 class="ph-title">Build the Intake UI in Power Apps</h2><span class="ph-tag pht-blue">Build</span></div>
+        <div class="phase-hdr"><span class="ph-num">02</span><h2 class="ph-title">Create the Canvas App</h2><span class="ph-tag pht-blue">Build</span></div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-b">2.1</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio (make.powerapps.com)</div><div class="stitle">Create the Canvas App from Template</div><div class="sdesc">Build the intake form as a Canvas App — the reusable UI template for all projects.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-b">2.1</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio (make.powerapps.com)</div><div class="stitle">Create Canvas App &amp; Connect SharePoint</div><div class="sdesc">Build the intake form as a Canvas App backed by SharePoint — all standard connector, zero premium licensing.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm you are working in the <strong>full Dataverse environment</strong> — check the environment picker top-right; it must NOT read "Teams"</span></li>
               <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Go to <code>make.powerapps.com</code> → <strong>+ Create → Canvas App from blank</strong></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Name the master template: <code>IntakeForm-MASTER-Template</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Build a <strong>multi-screen wizard</strong>: Screen 1 = Project Info · Screen 2 = Financial Details · Screen 3 = Review &amp; Submit</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add a <strong>project selector dropdown</strong> — one app serves multiple projects via <code>varProjectCode</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Set field-level conditional visibility on financial fields</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Name: <code>IntakeRequest-App</code> · Format: <strong>Tablet</strong> (better for multi-field forms)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Data panel → <strong>Add data → SharePoint</strong> → enter your site URL → select <code>IntakeRequests</code> list</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm the data source appears in the left Data panel before building screens</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Plan 3 screens: <strong>Screen 1</strong> = Request Details · <strong>Screen 2</strong> = Review &amp; Submit · <strong>Screen 3</strong> = Confirmation</span></li>
             </ul>
-            <div class="note tip"><span>💡</span><p>For each new project, add a new option to the project dropdown. One app, many projects — no duplication.</p></div>
+            <div class="note ok"><span>✅</span><p>SharePoint is a <strong>standard connector</strong>. Every M365 Business Premium user can run this app at no extra cost — no Power Apps per-user plan required.</p></div>
           </div>
         </div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-b">2.2</div><div class="smeta"><div class="stool">TOOL · Power Apps → Dataverse Connection</div><div class="stitle">Connect App to Dataverse &amp; Publish to Teams</div><div class="sdesc">Wire form fields to Dataverse and surface the app in Teams via SSO.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-b">2.2</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio · Formula Bar</div><div class="stitle">Submit Button — Patch() to SharePoint List</div><div class="sdesc">The submit button writes a new record to the SharePoint list using Power Apps' Patch() function.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
-            <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>Data → Add data → Dataverse</strong> → select your intake table</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Submit button: use <code>Patch(IntakeRequests, Defaults(IntakeRequests), {...})</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Always include <code>ProjectCode</code> as mandatory in every Patch call</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>Publish → Add to Teams</strong> → pin via Teams Admin Center Setup Policies</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add as a Tab in each project Teams channel · Test SSO (zero additional prompts)</span></li>
-            </ul>
+            <p style="font-size:12.5px;color:var(--ink3);margin-top:10px;">Set the <strong>OnSelect</strong> property of your Submit button:</p>
+            <div class="codeblock"><span class="cm">// OnSelect of Submit button — writes to SharePoint list</span>
+<span class="ck">Patch</span>(
+  IntakeRequests,          <span class="cm">// SharePoint list data source name</span>
+  <span class="ck">Defaults</span>(IntakeRequests), <span class="cm">// Creates a new item</span>
+  {
+    Title:         <span class="cs">txtTitle.Text</span>,
+    RequestType:   { <span class="ck">Value</span>: <span class="cs">ddRequestType.Selected.Value</span> },
+    Description:   <span class="cs">txtDescription.Text</span>,
+    Priority:      { <span class="ck">Value</span>: <span class="cs">ddPriority.Selected.Value</span> },
+    Department:    { <span class="ck">Value</span>: <span class="cs">ddDepartment.Selected.Value</span> },
+    TargetDate:    <span class="cs">dtpTargetDate.SelectedDate</span>,
+    EstimatedCost: <span class="ck">Value</span>(<span class="cs">txtCost.Text</span>),
+    Status:        { <span class="ck">Value</span>: <span class="cs">"Submitted"</span> },
+    RequestedBy:   {
+      <span class="ck">Claims</span>: <span class="cs">"i:0#.f|membership|"</span> &amp; <span class="ck">User</span>().Email,
+      <span class="ck">DisplayName</span>: <span class="ck">User</span>().FullName,
+      <span class="ck">Email</span>: <span class="ck">User</span>().Email
+    }
+  }
+);
+<span class="ck">Navigate</span>(scrConfirmation, <span class="ck">ScreenTransition</span>.Fade);</div>
+            <div class="note warn"><span>⚠️</span><p>Person/Group columns require the <code>Claims</code> string format with <code>i:0#.f|membership|</code> prefix. Copy exactly — a wrong format causes a silent write failure.</p></div>
           </div>
         </div>
       </section>
 
       <!-- PHASE 3 -->
       <section class="phase" id="s-p3">
-        <div class="phase-hdr"><span class="ph-num">03</span><h2 class="ph-title">Set Up the Dataverse Schema</h2><span class="ph-tag pht-green">Dataverse</span></div>
+        <div class="phase-hdr"><span class="ph-num">03</span><h2 class="ph-title">SharePoint List Schema</h2><span class="ph-tag pht-green">Schema</span></div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-g">3.1</div><div class="smeta"><div class="stool">TOOL · Dataverse (make.powerapps.com → Tables)</div><div class="stitle">Design the Intake Table — Multi-Project Schema</div><div class="sdesc">The central Dataverse table capturing all submissions across projects via one key field.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-g">3.1</div><div class="smeta"><div class="stool">TOOL · SharePoint List → Add Column</div><div class="stitle">Build the Intake List — Recommended Column Schema</div><div class="sdesc">Add these columns to your IntakeRequests SharePoint list. All standard SP column types — no custom development.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <table class="dt">
-              <thead><tr><th>Column</th><th>Type</th><th>Purpose</th></tr></thead>
+              <thead><tr><th>Column Name</th><th>SP Type</th><th>Required</th><th>Purpose</th></tr></thead>
               <tbody>
-                <tr><td><code>cr_projectcode</code></td><td>Text (required)</td><td>Links record to a project — the multi-project key</td></tr>
-                <tr><td><code>cr_requesttitle</code></td><td>Text</td><td>Short name for the request</td></tr>
-                <tr><td><code>cr_submittedby</code></td><td>Lookup → User</td><td>Auto-populated from Entra ID</td></tr>
-                <tr><td><code>cr_submissiondate</code></td><td>Date/Time</td><td>Auto-stamp on creation</td></tr>
-                <tr><td><code>cr_financialamount</code></td><td>Currency</td><td>Key financial field</td></tr>
-                <tr><td><code>cr_status</code></td><td>Choice</td><td>Draft / Submitted / Approved / Rejected</td></tr>
-                <tr><td><code>cr_approver</code></td><td>Lookup → User</td><td>Finance manager approver</td></tr>
+                <tr><td><code>Title</code></td><td>Single line of text</td><td>Yes</td><td>Short name / summary of the intake request</td></tr>
+                <tr><td><code>RequestType</code></td><td>Choice</td><td>Yes</td><td>IT / HR / Finance / Facilities / Other</td></tr>
+                <tr><td><code>Description</code></td><td>Multiple lines of text</td><td>Yes</td><td>Full details of the intake request</td></tr>
+                <tr><td><code>Priority</code></td><td>Choice</td><td>Yes</td><td>Low / Medium / High / Critical</td></tr>
+                <tr><td><code>RequestedBy</code></td><td>Person or Group</td><td>Yes</td><td>Auto-filled from Power Apps <code>User().Email</code></td></tr>
+                <tr><td><code>Department</code></td><td>Choice</td><td>Yes</td><td>Submitter's department for routing logic</td></tr>
+                <tr><td><code>TargetDate</code></td><td>Date and Time</td><td>No</td><td>Requested completion / delivery date</td></tr>
+                <tr><td><code>EstimatedCost</code></td><td>Currency</td><td>No</td><td>Cost estimate if applicable</td></tr>
+                <tr><td><code>Status</code></td><td>Choice</td><td>Yes</td><td>Draft / Submitted / In Review / Approved / Rejected</td></tr>
+                <tr><td><code>ApproverComments</code></td><td>Multiple lines of text</td><td>No</td><td>Written by approver — updated by Power Automate</td></tr>
+                <tr><td><code>ApprovedBy</code></td><td>Person or Group</td><td>No</td><td>Set by flow on approval</td></tr>
+                <tr><td><code>SubmissionDate</code></td><td>Date and Time</td><td>No</td><td>Set by flow when Status → Submitted</td></tr>
+                <tr><td><code>AttachmentURL</code></td><td>Hyperlink or Picture</td><td>No</td><td>Link to supporting file in SP document library</td></tr>
               </tbody>
             </table>
-            <div class="note warn"><span>⚠️</span><p><code>cr_projectcode</code> must be required. This single column lets one table serve all projects with filtered views.</p></div>
+            <div class="note tip"><span>💡</span><p>Set the default value for the <code>Status</code> column to <strong>Draft</strong>. This ensures records saved mid-form don't trigger the approval flow prematurely.</p></div>
           </div>
         </div>
       </section>
 
       <!-- PHASE 4 -->
       <section class="phase" id="s-p4">
-        <div class="phase-hdr"><span class="ph-num">04</span><h2 class="ph-title">Enable Dataverse → Fabric Link</h2><span class="ph-tag pht-amber">Fabric</span></div>
+        <div class="phase-hdr"><span class="ph-num">04</span><h2 class="ph-title">Build App Screens &amp; Formulas</h2><span class="ph-tag pht-blue">Build</span></div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-a">4.1</div><div class="smeta"><div class="stool">TOOL · Microsoft Fabric · Link to Dataverse</div><div class="stitle">Zero-Copy Link: Dataverse → OneLake</div><div class="sdesc">Connect Dataverse directly to Fabric — no ETL, no pipeline, near real-time.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-b">4.1</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio</div><div class="stitle">Home Screen — "My Requests" Gallery</div><div class="sdesc">Show the logged-in user's submitted requests with live status badges — filtered directly from SharePoint.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
-            <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm the Dataverse environment type is <strong>standalone (full)</strong> — Power Platform Admin Center → Environments → Type must read "Production" or "Sandbox", not "Teams"</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Fabric Lakehouse → <strong>Get Data → Dataverse</strong> → select your environment</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Select the <strong>intake request table</strong> → enable <strong>"Link to Microsoft Fabric"</strong></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm the table shortcut appears in <strong>OneLake → Tables</strong></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Run a Fabric Notebook query to validate data is flowing correctly</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Create per-project SQL views in the Lakehouse SQL endpoint: <code>vw_PRJ[Code]_Intake</code></span></li>
-            </ul>
-            <div class="note ok"><span>✅</span><p>The link is near-real-time. Data submitted in Power Apps is queryable in Fabric within seconds — no scheduled refresh needed.</p></div>
-            <div class="note warn"><span>⚠️</span><p>If this step fails with an environment type error, the Dataverse environment is still a Teams environment. Return to Phase 1 Step 1.1 — provision a full Power Platform environment with the Power Apps per-user plan assigned first.</p></div>
+            <p style="font-size:12.5px;color:var(--ink3);margin-top:10px;">Set the <strong>Items</strong> property of a vertical gallery:</p>
+            <div class="codeblock"><span class="cm">// Gallery Items — show current user's requests, newest first</span>
+<span class="ck">SortByColumns</span>(
+  <span class="ck">Filter</span>(
+    IntakeRequests,
+    RequestedBy.Email = <span class="ck">User</span>().Email
+  ),
+  <span class="cs">"Modified"</span>,
+  <span class="ck">SortOrder</span>.Descending
+)</div>
+            <p style="font-size:12.5px;color:var(--ink3);margin-top:12px;">Dynamic status badge colour — set the <strong>Fill</strong> of a rectangle inside the gallery:</p>
+            <div class="codeblock"><span class="ck">Switch</span>(
+  ThisItem.Status.Value,
+  <span class="cs">"Submitted"</span>,  <span class="ck">ColorValue</span>(<span class="cs">"#1a5cb0"</span>),
+  <span class="cs">"Approved"</span>,   <span class="ck">ColorValue</span>(<span class="cs">"#2a7a4f"</span>),
+  <span class="cs">"Rejected"</span>,   <span class="ck">ColorValue</span>(<span class="cs">"#b02a2a"</span>),
+  <span class="cs">"In Review"</span>,  <span class="ck">ColorValue</span>(<span class="cs">"#b06a00"</span>),
+  <span class="ck">ColorValue</span>(<span class="cs">"#9ca3af"</span>)  <span class="cm">// Draft</span>
+)</div>
+          </div>
+        </div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-b">4.2</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio</div><div class="stitle">Approver View Screen — Pending Queue</div><div class="sdesc">A separate screen for approvers to see all pending submissions across the organisation.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <div class="codeblock"><span class="cm">// Approver gallery — show all Submitted items</span>
+<span class="ck">SortByColumns</span>(
+  <span class="ck">Filter</span>(
+    IntakeRequests,
+    Status.Value = <span class="cs">"Submitted"</span>
+  ),
+  <span class="cs">"Created"</span>,
+  <span class="ck">SortOrder</span>.Ascending  <span class="cm">// Oldest first = FIFO queue</span>
+)
+
+<span class="cm">// Show approver screen only if user is in the approver group</span>
+<span class="cm">// On App OnStart, set: varIsApprover = !IsBlank(LookUp(ApproverGroup, Email = User().Email))</span>
+<span class="cm">// ApproverGroup = a separate SP list with one column: Email</span></div>
+            <div class="note tip"><span>💡</span><p>Maintain a small SharePoint list called <code>ApproverGroup</code> with one <code>Email</code> column. Use <code>LookUp(ApproverGroup, Email = User().Email)</code> in App OnStart to set a <code>varIsApprover</code> variable — show or hide the approver nav item accordingly.</p></div>
+          </div>
+        </div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-b">4.3</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio</div><div class="stitle">Edit / Update Existing Request</div><div class="sdesc">Let submitters edit draft requests, and let approvers add comments — using Patch() to update an existing item.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <div class="codeblock"><span class="cm">// Update an EXISTING item (not creating new)</span>
+<span class="ck">Patch</span>(
+  IntakeRequests,
+  <span class="cs">galMyRequests.Selected</span>,  <span class="cm">// Reference to selected gallery item</span>
+  {
+    Description:      <span class="cs">txtEditDescription.Text</span>,
+    Priority:         { <span class="ck">Value</span>: <span class="cs">ddEditPriority.Selected.Value</span> },
+    Status:           { <span class="ck">Value</span>: <span class="cs">"Submitted"</span> }
+  }
+);</div>
           </div>
         </div>
       </section>
 
       <!-- PHASE 5 -->
       <section class="phase" id="s-p5">
-        <div class="phase-hdr"><span class="ph-num">05</span><h2 class="ph-title">Automate Approvals &amp; Notifications</h2><span class="ph-tag pht-blue">Automate</span></div>
+        <div class="phase-hdr"><span class="ph-num">05</span><h2 class="ph-title">Power Automate Approval Flow</h2><span class="ph-tag pht-blue">Automate</span></div>
 
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-b">5.1</div><div class="smeta"><div class="stool">TOOL · Power Automate + Teams Adaptive Cards</div><div class="stitle">Build the Approval Workflow Template</div><div class="sdesc">One reusable flow handles approvals for all projects — approver pulled dynamically from the record.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-b">5.1</div><div class="smeta"><div class="stool">TOOL · Power Automate (make.powerautomate.com)</div><div class="stitle">Build the SharePoint-Triggered Approval Flow</div><div class="sdesc">Standard-connectors-only flow: SharePoint trigger → Approvals → Teams notification → SharePoint update.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Trigger: <strong>"When a row is added/modified" → Dataverse → IntakeRequests</strong> · condition: <code>Status = 'Submitted'</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>Start and wait for an approval</strong> → Approver = <code>cr_approver</code> from the record</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">On approval: update <code>cr_status = 'Approved'</code> + send Teams Adaptive Card to submitter</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">On rejection: update <code>cr_status = 'Rejected'</code> + Teams notification with reason</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Save as <strong>Solution-aware flow</strong> for portability across environments</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Go to <code>make.powerautomate.com</code> → <strong>+ Create → Automated cloud flow</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Trigger: <strong>"When an item is created"</strong> → SharePoint → Site: your intake site → List: <code>IntakeRequests</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add <strong>Condition</strong>: <code>Status Value</code> is equal to <code>Submitted</code> (prevents triggering on Draft saves)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Yes branch → <strong>Start and wait for an approval</strong> → Type: <strong>Approve/Reject - First to respond</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Assigned To: your approver's email (or dynamic group email based on Department column value)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Title: <code>Intake Request: [Title]</code> · Details: compose request type, submitter, description</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">After approval step: add <strong>Condition</strong> on <code>Outcome</code> — branch Approved vs Rejected</span></li>
             </ul>
+            <div class="note ok"><span>✅</span><p>This flow uses only <strong>SharePoint</strong>, <strong>Approvals</strong>, and <strong>Microsoft Teams</strong> connectors — all standard. Fully covered by M365 Business Premium. No premium connector licence required.</p></div>
+          </div>
+        </div>
+
+        <div class="step-card" onclick="toggleStep(this)">
+          <div class="step-hdr"><div class="snum sn-b">5.2</div><div class="smeta"><div class="stool">TOOL · Power Automate · Branches</div><div class="stitle">Update Status &amp; Notify Submitter on Decision</div><div class="sdesc">After approval decision, write the outcome back to SharePoint and send a Teams notification to the submitter.</div></div><span class="schev">▾</span></div>
+          <div class="sbody">
+            <table class="dt">
+              <thead><tr><th>Branch</th><th>SP Update</th><th>Notification</th></tr></thead>
+              <tbody>
+                <tr><td><strong style="color:var(--green);">Approved</strong></td><td>Status = <code>Approved</code>, ApprovedBy = approver email, ApproverComments = comments</td><td>Teams message to submitter: "Your request [Title] has been approved."</td></tr>
+                <tr><td><strong style="color:var(--rose);">Rejected</strong></td><td>Status = <code>Rejected</code>, ApproverComments = rejection reason</td><td>Teams message to submitter with rejection reason from approver</td></tr>
+              </tbody>
+            </table>
+            <div class="note tip"><span>💡</span><p>Add a parallel <strong>Send an email (V2)</strong> action (Office 365 Outlook — standard connector) alongside the Teams notification. Approvers and submitters receive both a Teams card and an email confirmation.</p></div>
           </div>
         </div>
       </section>
@@ -843,59 +833,61 @@ code {
       <section class="phase" id="s-p6">
         <div class="phase-hdr"><span class="ph-num">06</span><h2 class="ph-title">Security &amp; Governance</h2><span class="ph-tag pht-rose">Security</span></div>
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-r">6.1</div><div class="smeta"><div class="stool">TOOL · Entra ID P1 + Intune + Defender for Business + Dataverse RLS + Purview AIP P1</div><div class="stitle">Financial Data Security — Business Premium Layer Checklist</div><div class="sdesc">Enforce security at every layer using Business Premium's full toolkit including Defender for Business and Intune.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-r">6.1</div><div class="smeta"><div class="stool">TOOL · SharePoint + Entra ID + Intune + Defender for Business</div><div class="stitle">Security Layer Checklist — M365 BP Stack</div><div class="sdesc">Enforce security at every layer using the full Business Premium toolkit — no Dataverse RLS needed at this tier.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <table class="dt">
               <thead><tr><th>Layer</th><th>Tool</th><th>Action</th></tr></thead>
               <tbody>
-                <tr><td>Auth</td><td>Entra ID</td><td>MFA + Conditional Access for all users</td></tr>
-                <tr><td>App</td><td>Power Apps</td><td>Share only with Entra groups per project</td></tr>
-                <tr><td>Write</td><td>Dataverse RLS</td><td>Security roles per project — server-side enforcement</td></tr>
-                <tr><td>Read</td><td>Power BI RLS</td><td>Semantic model role scoped by project_code</td></tr>
-                <tr><td>Classification</td><td>Purview</td><td>"Financial – Confidential" sensitivity labels</td></tr>
-                <tr><td>Endpoint ✦</td><td>Intune (BP exclusive)</td><td>Require compliant device via Conditional Access policy on Power Apps and Teams</td></tr>
-                <tr><td>Threat Detection ✦</td><td>Defender for Business (BP exclusive)</td><td>Endpoint protection; alerts route to IT as compensating SIEM control (no Sentinel in BP)</td></tr>
-                <tr><td>Audit</td><td>Purview Audit Standard</td><td>Route Dataverse + Power Platform logs to Purview Audit (Sentinel not available in BP)</td></tr>
+                <tr><td>Auth</td><td>Entra ID P1</td><td>MFA + Conditional Access for all Power Apps users</td></tr>
+                <tr><td>App Access</td><td>Power Apps</td><td>Share app only with M365 groups — not public</td></tr>
+                <tr><td>Data Read</td><td>SharePoint</td><td>Item-level permissions — submitters read own items only</td></tr>
+                <tr><td>Data Write</td><td>SharePoint</td><td>Contribute permission for submitters; Contribute for flow account; Full Control for admins</td></tr>
+                <tr><td>Endpoint ✦</td><td>Intune (BP exclusive)</td><td>Require compliant device via Conditional Access on Power Apps and SharePoint</td></tr>
+                <tr><td>Threat Detection ✦</td><td>Defender for Business (BP exclusive)</td><td>Endpoint protection; integrate device health with Conditional Access policy</td></tr>
+                <tr><td>Audit</td><td>SharePoint Versioning</td><td>Enable versioning on list — every edit tracked; supplement with Purview Audit Standard</td></tr>
+                <tr><td>Sensitivity</td><td>Purview AIP P1</td><td>Apply "Confidential" sensitivity label to the SharePoint site if handling sensitive data</td></tr>
               </tbody>
             </table>
+            <div class="note warn"><span>⚠️</span><p>SharePoint item-level permissions are app-side only — they rely on SharePoint enforcing access. Unlike Dataverse RLS, there is no server-side row filter at the database layer. For non-financial internal intake, this is acceptable. For financial-grade data isolation, consider upgrading to Dataverse.</p></div>
           </div>
         </div>
       </section>
 
       <!-- PHASE 7 -->
       <section class="phase" id="s-p7">
-        <div class="phase-hdr"><span class="ph-num">07</span><h2 class="ph-title">Power BI Reporting</h2><span class="ph-tag pht-amber">Reporting</span></div>
+        <div class="phase-hdr"><span class="ph-num">07</span><h2 class="ph-title">Teams Deployment &amp; Publishing</h2><span class="ph-tag pht-amber">Deploy</span></div>
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-a">7.1</div><div class="smeta"><div class="stool">TOOL · Power BI + Fabric Semantic Model (DirectLake)</div><div class="stitle">Build the Multi-Project PM Dashboard</div><div class="sdesc">One report, all projects — each PM scoped to their own data via RLS.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-a">7.1</div><div class="smeta"><div class="stool">TOOL · Power Apps Studio + Teams Admin Center</div><div class="stitle">Publish App &amp; Pin as Teams Tab</div><div class="sdesc">Surface the intake app directly in Teams — users never need to leave Teams to submit a request.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Confirm <strong>Power BI Pro add-on</strong> is assigned to all report builders and consumers — ~$10/user/month, not included in Business Premium</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Fabric workspace: <strong>New → Semantic Model</strong> → connect to Lakehouse <code>vw_AllProjects_Summary</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Add RLS role: <code>ProjectMember</code> filtered by <code>[ProjectCode] = USERNAME()</code></span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Build report: intake volume · approval funnel · financial totals · submission trend</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Pin report as a tab in each Teams project channel</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Power Apps Studio → <strong>Save</strong> → <strong>Publish</strong></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">On the app detail page → <strong>Add to Teams</strong> → download the Teams app package (.zip)</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">In Teams Admin Center → <strong>Teams apps → Manage apps → Upload new app</strong> → upload the .zip</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Create a <strong>Setup Policy</strong> → pin the intake app for all staff or targeted groups</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Alternatively: in Teams channel → <strong>+ Add a tab → Power Apps</strong> → select the intake app</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Test SSO: open the tab — users should sign in automatically, no extra prompts</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext">Run an end-to-end test: submit a request, confirm it appears in SharePoint list, confirm approval flow triggers</span></li>
             </ul>
+            <div class="note ok"><span>✅</span><p>Power Apps in Teams uses the same Entra ID session — SSO is seamless. No extra authentication steps for users already in Teams.</p></div>
           </div>
         </div>
       </section>
 
       <!-- PHASE 8 -->
       <section class="phase" id="s-p8">
-        <div class="phase-hdr"><span class="ph-num">08</span><h2 class="ph-title">Scale — New Project Spin-Up</h2><span class="ph-tag pht-purple">Scale</span></div>
+        <div class="phase-hdr"><span class="ph-num">08</span><h2 class="ph-title">Scale — New Request Type Onboarding</h2><span class="ph-tag pht-purple">Scale</span></div>
         <div class="step-card" onclick="toggleStep(this)">
-          <div class="step-hdr"><div class="snum sn-p">8.1</div><div class="smeta"><div class="stool">TOOL · All of the above — config only</div><div class="stitle">7-Step New Project Onboarding Checklist</div><div class="sdesc">No new infrastructure. A new project is just configuration.</div></div><span class="schev">▾</span></div>
+          <div class="step-hdr"><div class="snum sn-p">8.1</div><div class="smeta"><div class="stool">TOOL · SharePoint + Power Apps — config only</div><div class="stitle">5-Step New Request Type Checklist</div><div class="sdesc">No new infrastructure needed. Adding a new intake category is just configuration — under 30 minutes per type.</div></div><span class="schev">▾</span></div>
           <div class="sbody">
             <ul class="cl">
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>1 — Register:</strong> Add <code>ProjectCode</code> to Power Apps dropdown lookup table</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>2 — Security:</strong> Create Entra ID group <code>SG-PRJ[Code]-Members</code>, assign users, confirm all devices are enrolled in Intune</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>3 — Dataverse role:</strong> Duplicate template role → rename <code>Role-PRJ[Code]-Member</code> → assign group</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>4 — Fabric view:</strong> Create <code>vw_PRJ[Code]_Intake</code> in Lakehouse SQL endpoint</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>5 — Power BI RLS:</strong> Add project code to semantic model role mapping</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>6 — Teams channel:</strong> Create <code>PRJ-[Code]</code> channel · pin intake app + report as tabs</span></li>
-              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>7 — Test:</strong> Submit test record · verify approval fires · confirm data in Fabric report</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>1 — Register:</strong> Add the new category to the <code>RequestType</code> Choice column in the SharePoint list</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>2 — Routing:</strong> Update Power Automate flow — add condition branch for new category to route to the correct approver email or group</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>3 — App update:</strong> If category needs unique form fields, add a conditional section in the Canvas App using <code>If(ddRequestType.Selected.Value = "NewType", ...)</code></span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>4 — Permissions:</strong> Confirm the new approver has Contribute access to the SharePoint list</span></li>
+              <li><span class="cbox" onclick="toggleCheck(event,this)"></span><span class="ctext"><strong>5 — Test:</strong> Submit a test request of the new type · verify approval routes correctly · confirm status updates in list</span></li>
             </ul>
-            <div class="note ok"><span>🚀</span><p><strong>Target: under 1 hour per new project.</strong> All infrastructure is already running — you're only registering a project code and configuring access. Monitor cumulative user count against the 300-user Business Premium cap.</p></div>
-            <div class="note warn"><span>⚠️</span><p>If you are approaching 300 users, plan a migration to M365 E3 or E5 before hitting the cap. Business Premium cannot exceed this limit.</p></div>
+            <div class="note ok"><span>🚀</span><p><strong>Target: under 30 minutes per new intake type.</strong> All infrastructure — SharePoint site, Canvas App, approval flow — is already live. You're only registering a new dropdown choice and routing logic. No new deployments.</p></div>
+            <div class="note warn"><span>⚠️</span><p>If you are approaching 300 users on Business Premium, plan a migration to M365 E3 or E5 before hitting the cap. The SharePoint architecture scales directly to E3/E5 without any rework.</p></div>
           </div>
         </div>
       </section>
@@ -911,42 +903,41 @@ code {
 <div class="tab-panel" id="tab-collab">
 
   <div class="panel-header">
-    <div class="ph-kicker">Team Collaboration · Data Requirements · Engineering Handoff</div>
-    <h1>How PM &amp; Data Engineering<br>Work Together</h1>
-    <p>The PM owns requirements and the intake experience. Data Engineering owns integration, the Fabric backend, and the data pipeline. Here's how they collaborate and where the data flows.</p>
+    <div class="ph-kicker">Team Collaboration · Intake Process · App Owner &amp; Approver Roles</div>
+    <h1>How Requesters &amp; Approvers<br>Work Together</h1>
+    <p>The App Owner configures the Canvas App and SharePoint list. Business users submit requests. Approvers review and decide via Teams. Here's how the intake process flows from request to resolution.</p>
   </div>
 
   <div class="collab-section">
 
     <!-- SWIMLANE -->
     <div class="swim-wrap">
-      <div class="swim-title">Requirements &amp; Handoff Process</div>
-      <div class="swim-sub">How a data requirement moves from PM discovery through to a live Fabric-integrated pipeline.</div>
+      <div class="swim-title">Intake Request Lifecycle</div>
+      <div class="swim-sub">How a request moves from initial submission through approval to closure.</div>
 
       <div class="swimlane">
-        <!-- header row -->
         <div class="sl-header" style="grid-template-columns:160px 1fr 1fr 1fr;">
           <div class="sl-role" style="background:var(--surface2);color:var(--ink4);">Stage</div>
-          <div class="sl-role sl-pm">👤 PM (Project Manager)</div>
-          <div class="sl-role sl-shared">🤝 Shared / Review</div>
-          <div class="sl-role sl-de">⚙️ Data Engineering</div>
+          <div class="sl-role sl-pm">👤 Requester (Staff)</div>
+          <div class="sl-role sl-shared">🤝 System / Flow</div>
+          <div class="sl-role sl-de">✅ Approver (Manager)</div>
         </div>
 
         <!-- Stage 1 -->
         <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;">
           <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 1<br><strong style="font-size:11px;color:var(--ink2);">Discovery</strong></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 1<br><strong style="font-size:11px;color:var(--ink2);">Initiate</strong></div>
           </div>
           <div class="sl-cell pm-cell">
             <div class="flow-step">
-              <div class="fs-num">PM-01</div>
-              <div class="fs-title">Identify Data Need</div>
-              <div class="fs-body">PM identifies a reporting or intake gap. Defines what data needs to be captured, who submits it, and what decisions it informs.</div>
+              <div class="fs-num">REQ-01</div>
+              <div class="fs-title">Open Intake App in Teams</div>
+              <div class="fs-body">User opens the Canvas App pinned as a Teams tab. Entra ID authenticates silently — no extra login.</div>
             </div>
             <div class="flow-step">
-              <div class="fs-num">PM-02</div>
-              <div class="fs-title">Draft Intake Form Fields</div>
-              <div class="fs-body">Lists all fields needed: field name, type (text/currency/date), required or optional, and which are sensitive/financial.</div>
+              <div class="fs-num">REQ-02</div>
+              <div class="fs-title">Fill Intake Form</div>
+              <div class="fs-body">Completes the multi-screen wizard: request title, type, department, description, priority, and optional target date / cost estimate.</div>
             </div>
           </div>
           <div class="sl-cell sh-cell empty"></div>
@@ -956,76 +947,60 @@ code {
         <!-- Stage 2 -->
         <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
           <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 2<br><strong style="font-size:11px;color:var(--ink2);">Alignment</strong></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 2<br><strong style="font-size:11px;color:var(--ink2);">Submit</strong></div>
           </div>
           <div class="sl-cell pm-cell">
             <div class="flow-step">
-              <div class="fs-num">PM-03</div>
-              <div class="fs-title">Share Requirements Doc</div>
-              <div class="fs-body">PM shares a structured requirements doc (in SharePoint / Confluence) with: field list, data types, governance notes, and reporting goals.</div>
+              <div class="fs-num">REQ-03</div>
+              <div class="fs-title">Review &amp; Submit</div>
+              <div class="fs-body">Reviews the summary on Screen 2. Clicks Submit — Patch() writes record to SharePoint list with Status = Submitted.</div>
             </div>
           </div>
           <div class="sl-cell sh-cell">
             <div class="handoff">
-              <div class="ho-icon">📋</div>
+              <div class="ho-icon">⚡</div>
               <div>
-                <div class="ho-label">Handoff Artifact</div>
-                <div class="ho-title">Data Requirements Doc</div>
-                <div class="ho-desc">Fields · Types · Sensitivity flags · Reporting KPIs · Frequency</div>
+                <div class="ho-label">Trigger</div>
+                <div class="ho-title">Power Automate Fires</div>
+                <div class="ho-desc">SharePoint "When item created" trigger fires instantly. Flow validates Status = Submitted and routes to approver.</div>
               </div>
             </div>
-            <div class="flow-step">
-              <div class="fs-num">REVIEW</div>
-              <div class="fs-title">Joint Review Session</div>
-              <div class="fs-body">PM + DE meet to align on schema design, data types, and what Fabric layer each field belongs to. DE flags any governance or modeling concerns.</div>
-            </div>
           </div>
-          <div class="sl-cell de-cell">
-            <div class="flow-step">
-              <div class="fs-num">DE-01</div>
-              <div class="fs-title">Review &amp; Validate Schema</div>
-              <div class="fs-body">DE reviews PM's field list against Dataverse/Fabric schema patterns. Proposes normalized structure, naming conventions, and partitioning strategy.</div>
-            </div>
-          </div>
+          <div class="sl-cell de-cell empty"></div>
         </div>
 
         <!-- Stage 3 -->
         <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
           <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 3<br><strong style="font-size:11px;color:var(--ink2);">Build</strong></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 3<br><strong style="font-size:11px;color:var(--ink2);">Review</strong></div>
           </div>
           <div class="sl-cell pm-cell">
             <div class="flow-step">
-              <div class="fs-num">PM-04</div>
-              <div class="fs-title">Build Canvas App UI</div>
-              <div class="fs-body">PM (or Power Platform maker) builds the intake form in Power Apps, connecting to the Dataverse table DE has created.</div>
-            </div>
-            <div class="flow-step">
-              <div class="fs-num">PM-05</div>
-              <div class="fs-title">Configure Approval Flow</div>
-              <div class="fs-body">PM builds the Power Automate approval workflow using the Dataverse trigger. Sets up Teams notifications and approver routing.</div>
+              <div class="fs-num">REQ-04</div>
+              <div class="fs-title">Awaiting Decision</div>
+              <div class="fs-body">Request shows "Submitted" badge in My Requests gallery. Requester can track status at any time without chasing the approver.</div>
             </div>
           </div>
           <div class="sl-cell sh-cell">
             <div class="handoff">
-              <div class="ho-icon">🔗</div>
+              <div class="ho-icon">📣</div>
               <div>
-                <div class="ho-label">Integration Handoff</div>
-                <div class="ho-title">Dataverse Table Spec</div>
-                <div class="ho-desc">DE provides table name, column names, and data types. PM maps form fields to these columns.</div>
+                <div class="ho-label">Adaptive Card</div>
+                <div class="ho-title">Teams Approval Card Sent</div>
+                <div class="ho-desc">Approver receives an Adaptive Card in Teams with Approve / Reject buttons and full request details inline.</div>
               </div>
             </div>
           </div>
           <div class="sl-cell de-cell">
             <div class="flow-step">
-              <div class="fs-num">DE-02</div>
-              <div class="fs-title">Create Dataverse Table</div>
-              <div class="fs-body">DE creates the Dataverse intake table with agreed schema, sets column types, required fields, and applies Purview sensitivity labels.</div>
+              <div class="fs-num">APR-01</div>
+              <div class="fs-title">Review Request Details</div>
+              <div class="fs-body">Approver reads the request in the Teams Adaptive Card or opens the intake app Approver view to see the full queue.</div>
             </div>
             <div class="flow-step">
-              <div class="fs-num">DE-03</div>
-              <div class="fs-title">Configure Fabric Link</div>
-              <div class="fs-body">DE enables the zero-copy Dataverse → OneLake link in the Fabric workspace. Creates the Lakehouse, SQL views, and Semantic Model.</div>
+              <div class="fs-num">APR-02</div>
+              <div class="fs-title">Approve or Reject</div>
+              <div class="fs-body">Clicks Approve or Reject directly from Teams. Adds optional comments. Decision sent back to Power Automate instantly.</div>
             </div>
           </div>
         </div>
@@ -1033,54 +1008,46 @@ code {
         <!-- Stage 4 -->
         <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
           <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 4<br><strong style="font-size:11px;color:var(--ink2);">Validate</strong></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 4<br><strong style="font-size:11px;color:var(--ink2);">Resolution</strong></div>
           </div>
           <div class="sl-cell pm-cell">
             <div class="flow-step">
-              <div class="fs-num">PM-06</div>
-              <div class="fs-title">UAT &amp; Sign-Off</div>
-              <div class="fs-body">PM runs user acceptance testing: submits test records, validates approval flow, confirms data appears in Power BI report correctly.</div>
+              <div class="fs-num">REQ-05</div>
+              <div class="fs-title">Receive Decision Notification</div>
+              <div class="fs-body">Requester receives a Teams message and email with the outcome. Status badge in the app updates to Approved or Rejected.</div>
             </div>
           </div>
           <div class="sl-cell sh-cell">
-            <div class="flow-step">
-              <div class="fs-num">JOINT</div>
-              <div class="fs-title">End-to-End Test</div>
-              <div class="fs-body">PM and DE jointly verify: form → Dataverse write → Fabric link → Power BI refresh. Both sign off before go-live.</div>
+            <div class="handoff">
+              <div class="ho-icon">🔄</div>
+              <div>
+                <div class="ho-label">SP Update</div>
+                <div class="ho-title">SharePoint Item Updated</div>
+                <div class="ho-desc">Flow writes Status, ApprovedBy, and ApproverComments back to the SharePoint list item. Full audit trail in versioning.</div>
+              </div>
             </div>
           </div>
-          <div class="sl-cell de-cell">
-            <div class="flow-step">
-              <div class="fs-num">DE-04</div>
-              <div class="fs-title">Validate Data in Fabric</div>
-              <div class="fs-body">DE confirms test records appear in OneLake with correct schema, no nulls on required fields, and partitioning is working correctly.</div>
-            </div>
-            <div class="flow-step">
-              <div class="fs-num">DE-05</div>
-              <div class="fs-title">Build Power BI Report</div>
-              <div class="fs-body">DE creates the DirectLake Semantic Model and Power BI report. Applies RLS roles so each PM sees only their project data.</div>
-            </div>
-          </div>
+          <div class="sl-cell de-cell empty"></div>
         </div>
 
         <!-- Stage 5 -->
         <div class="sl-row" style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;border-top:1px solid var(--border);">
           <div class="sl-cell" style="background:var(--surface2);display:flex;align-items:center;justify-content:center;">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 5<br><strong style="font-size:11px;color:var(--ink2);">Live + Scale</strong></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink4);letter-spacing:0.1em;text-align:center;">STAGE 5<br><strong style="font-size:11px;color:var(--ink2);">Closure</strong></div>
           </div>
           <div class="sl-cell pm-cell">
             <div class="flow-step">
-              <div class="fs-num">PM-07</div>
-              <div class="fs-title">Onboard New Projects</div>
-              <div class="fs-body">For each new project: PM runs the 7-step config checklist (Tab 1). No new infrastructure needed — DE only adds a SQL view and RLS mapping.</div>
+              <div class="fs-num">REQ-06</div>
+              <div class="fs-title">View Final Status</div>
+              <div class="fs-body">Request visible in My Requests gallery with final Approved/Rejected status. Can view approver comments in detail screen.</div>
             </div>
           </div>
           <div class="sl-cell sh-cell empty"></div>
           <div class="sl-cell de-cell">
             <div class="flow-step">
-              <div class="fs-num">DE-06</div>
-              <div class="fs-title">Add SQL View + RLS</div>
-              <div class="fs-body">For each new project: DE creates <code>vw_PRJ[Code]_Intake</code> in the Lakehouse and adds the RLS mapping in the Semantic Model. ~15 minutes per project.</div>
+              <div class="fs-num">APR-03</div>
+              <div class="fs-title">Monitor Queue</div>
+              <div class="fs-body">Approver can open the Approver view in the app to see all pending, approved, and rejected items filtered by department.</div>
             </div>
           </div>
         </div>
@@ -1091,8 +1058,8 @@ code {
 
     <!-- DATA FLOW LAYERS -->
     <div class="dataflow-wrap">
-      <div class="swim-title">Data Flow — From Form Submission to Fabric Reporting</div>
-      <div class="swim-sub">How a single intake form submission travels through every layer of the stack, from the user's browser to the Power BI report.</div>
+      <div class="swim-title">Data Flow — From Form Submission to SharePoint Record</div>
+      <div class="swim-sub">How a single intake form submission travels through every layer — from user's Teams tab to the SharePoint list and back.</div>
 
       <div class="layer-stack">
 
@@ -1106,7 +1073,7 @@ code {
             <div class="layer-chip"><span class="lc-icon">💬</span> Microsoft Teams Tab</div>
             <div class="layer-chip"><span class="lc-icon">🔐</span> Entra ID P1 SSO</div>
             <div class="layer-chip" style="background:var(--purple-bg);border-color:var(--purple-bd);color:var(--purple);"><span class="lc-icon">📱</span> Intune Device Gate ✦</div>
-            <div class="layer-desc">User opens the intake form in Teams (or Power Apps). Entra ID authenticates silently. Multi-screen wizard collects structured data including financial fields. On submit, the form calls <code>Patch()</code> to write directly into Dataverse. <strong>PM owns this layer.</strong></div>
+            <div class="layer-desc">User opens the intake form in Teams. Entra ID authenticates silently. Multi-screen wizard collects structured data. On submit, the form calls <code>Patch()</code> to write directly into the SharePoint list. <strong>App Owner configures; users submit.</strong></div>
           </div>
         </div>
 
@@ -1120,55 +1087,40 @@ code {
           <div class="layer-body">
             <div class="layer-chip"><span class="lc-icon">⚡</span> Power Automate</div>
             <div class="layer-chip"><span class="lc-icon">✅</span> Approvals Connector</div>
-            <div class="layer-chip"><span class="lc-icon">📣</span> Adaptive Cards</div>
-            <div class="layer-desc">A Dataverse row-change event triggers an approval flow instantly. Power Automate routes the request to the approver (pulled from <code>cr_approver</code>), sends Teams notifications, and updates <code>cr_status</code> on resolution. <strong>PM builds and owns this layer.</strong></div>
+            <div class="layer-chip"><span class="lc-icon">📣</span> Teams Adaptive Cards</div>
+            <div class="layer-chip"><span class="lc-icon">📧</span> Office 365 Outlook</div>
+            <div class="layer-desc">A SharePoint item-created event triggers the approval flow instantly. Power Automate routes the request to the approver, sends a Teams Adaptive Card with Approve/Reject buttons, and updates <code>Status</code> on resolution. <strong>All standard connectors — zero premium cost.</strong></div>
           </div>
         </div>
 
         <div class="layer-arrow">↓</div>
 
-        <div class="layer l-dv">
+        <div class="layer l-sp">
           <div class="layer-label">
-            <div class="ll-tag">Layer 3 ⚠</div>
-            <div class="ll-name">Full Dataverse<br><span style="font-size:10px;color:var(--amber);font-weight:400;">Add-on required</span></div>
+            <div class="ll-tag">Layer 3</div>
+            <div class="ll-name">Data Store</div>
           </div>
           <div class="layer-body">
-            <div class="layer-chip"><span class="lc-icon">🗄️</span> Full Dataverse Table</div>
-            <div class="layer-chip"><span class="lc-icon">🔒</span> Row-Level Security</div>
-            <div class="layer-chip"><span class="lc-icon">📝</span> Change Tracking</div>
-            <div class="layer-chip" style="background:var(--amber-bg);border-color:var(--amber-bd);color:var(--amber);">⚠ Power Apps per-user add-on</div>
-            <div class="layer-desc">All intake records land here. Dataverse enforces server-side business rules, field-level security, and maintains a full audit log. Financial fields are tagged with Purview sensitivity labels. Data is partitioned by <code>cr_projectcode</code> for multi-project isolation. <strong>DE creates schema; Dataverse manages it.</strong></div>
+            <div class="layer-chip"><span class="lc-icon">📋</span> SharePoint List</div>
+            <div class="layer-chip"><span class="lc-icon">🔒</span> Item-Level Permissions</div>
+            <div class="layer-chip"><span class="lc-icon">📝</span> List Versioning</div>
+            <div class="layer-chip" style="background:var(--green-bg);border-color:var(--green-bd);color:var(--green);">✓ Standard Connector</div>
+            <div class="layer-desc">All intake records land here. SharePoint enforces item-level read permissions (users see own items). Versioning tracks every edit. The Power Automate flow updates Status and ApproverComments columns after decision. <strong>Zero add-on cost — fully included in M365 BP.</strong></div>
           </div>
         </div>
 
-        <div class="layer-arrow">↓  <span style="font-size:11px;color:var(--ink4);font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;"> Zero-copy link — no ETL, no pipeline, near real-time</span></div>
-
-        <div class="layer l-fl">
-          <div class="layer-label">
-            <div class="ll-tag">Layer 4</div>
-            <div class="ll-name">Analytics Store</div>
-          </div>
-          <div class="layer-body">
-            <div class="layer-chip"><span class="lc-icon">🏗️</span> Fabric OneLake</div>
-            <div class="layer-chip"><span class="lc-icon">📂</span> Lakehouse (Delta)</div>
-            <div class="layer-chip"><span class="lc-icon">🔍</span> SQL Endpoint</div>
-            <div class="layer-chip"><span class="lc-icon">📊</span> Semantic Model</div>
-            <div class="layer-desc">Dataverse data lands in OneLake via zero-copy shortcut — the original data stays in Dataverse, Fabric reads it directly. DE creates per-project SQL views (<code>vw_PRJ001_Intake</code>) and a cross-project summary view. The Semantic Model applies RLS so each PM sees only their project's data. <strong>Data Engineering owns this layer entirely.</strong></div>
-          </div>
-        </div>
-
-        <div class="layer-arrow">↓</div>
+        <div class="layer-arrow">↓  <span style="font-size:11px;color:var(--ink4);font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;">Status update written back — Canvas App gallery refreshes automatically</span></div>
 
         <div class="layer l-bi">
           <div class="layer-label">
-            <div class="ll-tag">Layer 5</div>
-            <div class="ll-name">Reporting</div>
+            <div class="ll-tag">Layer 4</div>
+            <div class="ll-name">Notification</div>
           </div>
           <div class="layer-body">
-            <div class="layer-chip"><span class="lc-icon">📊</span> Power BI DirectLake</div>
-            <div class="layer-chip"><span class="lc-icon">💬</span> Teams Report Tab</div>
-            <div class="layer-chip"><span class="lc-icon">🤖</span> Fabric AI Agent</div>
-            <div class="layer-desc">Power BI connects to the Fabric Semantic Model via DirectLake — no import, no scheduled refresh. Reports always reflect live data. PMs see intake volume, approval funnel, and financial totals scoped to their project. Pinned as a tab in Teams. <strong>DE builds the model; PMs consume the reports.</strong></div>
+            <div class="layer-chip"><span class="lc-icon">💬</span> Teams Message</div>
+            <div class="layer-chip"><span class="lc-icon">📧</span> Outlook Email</div>
+            <div class="layer-chip"><span class="lc-icon">🔔</span> Status Badge Update</div>
+            <div class="layer-desc">After the approval decision, the flow posts a Teams message and email to the requester. The Canvas App gallery automatically refreshes the status badge next time the user opens the app — no polling required. <strong>App Owner owns notifications; requesters consume them.</strong></div>
           </div>
         </div>
 
@@ -1176,38 +1128,38 @@ code {
     </div>
 
     <!-- INGESTION STEPS -->
-    <div class="swim-title" style="margin-bottom:6px;">End-to-End Ingestion Steps</div>
-    <div class="swim-sub" style="margin-bottom:20px;">The exact sequence from a user clicking Submit to data appearing in the Power BI report.</div>
+    <div class="swim-title" style="margin-bottom:6px;">End-to-End Request Lifecycle Steps</div>
+    <div class="swim-sub" style="margin-bottom:20px;">The exact sequence from a user clicking Submit to status appearing as Approved in the app.</div>
     <div class="ingest-steps">
       <div class="ingest-step">
         <div class="is-icon">👤</div>
         <div class="is-label">Step 1</div>
         <div class="is-title">User Submits</div>
-        <div class="is-desc">Power Apps <code>Patch()</code> writes record to Dataverse IntakeRequests table</div>
+        <div class="is-desc">Canvas App <code>Patch()</code> writes record to SharePoint IntakeRequests list</div>
       </div>
       <div class="ingest-step">
         <div class="is-icon">⚡</div>
         <div class="is-label">Step 2</div>
         <div class="is-title">Flow Triggers</div>
-        <div class="is-desc">Dataverse row-change event fires Power Automate approval flow instantly</div>
+        <div class="is-desc">SharePoint item-created event fires Power Automate approval flow instantly</div>
       </div>
       <div class="ingest-step">
-        <div class="is-icon">🔗</div>
+        <div class="is-icon">📣</div>
         <div class="is-label">Step 3</div>
-        <div class="is-title">Zero-Copy Sync</div>
-        <div class="is-desc">Dataverse → Fabric link pushes new record into OneLake within seconds. No ETL.</div>
+        <div class="is-title">Approver Notified</div>
+        <div class="is-desc">Adaptive Card sent to approver's Teams. Approver clicks Approve or Reject inline</div>
       </div>
       <div class="ingest-step">
-        <div class="is-icon">🗄️</div>
+        <div class="is-icon">🔄</div>
         <div class="is-label">Step 4</div>
-        <div class="is-title">Delta Table Updated</div>
-        <div class="is-desc">Record lands in Fabric Lakehouse Delta table, partitioned by <code>project_code</code></div>
+        <div class="is-title">SP Item Updated</div>
+        <div class="is-desc">Flow writes Status = Approved/Rejected + ApproverComments back to SharePoint</div>
       </div>
       <div class="ingest-step">
-        <div class="is-icon">📊</div>
+        <div class="is-icon">✅</div>
         <div class="is-label">Step 5</div>
-        <div class="is-title">Report Reflects Live</div>
-        <div class="is-desc">Power BI DirectLake reads new data instantly — no refresh needed</div>
+        <div class="is-title">Requester Notified</div>
+        <div class="is-desc">Teams message + email sent. Status badge in app updates on next open</div>
       </div>
     </div>
 
@@ -1221,31 +1173,31 @@ code {
 <div class="tab-panel" id="tab-matrix">
 
   <div class="panel-header">
-    <div class="ph-kicker">Architecture Decision Matrix · All Three Options Compared</div>
+    <div class="ph-kicker">Architecture Decision Matrix · Three Backend Options Compared</div>
     <h1>Which Architecture<br>Should You Choose?</h1>
-    <p>A structured comparison across licensing, complexity, security, resilience, and Fabric integration — built for stakeholder decisions under M365 Business Premium. Option 1 remains the right choice, but requires the Power Apps per-user add-on to unlock full Dataverse.</p>
-    <div class="chosen-badge">✓ Selected Architecture — Power Apps → Dataverse → Fabric Zero-Copy Link</div>
+    <p>A structured comparison across licensing cost, complexity, security, resilience, and scalability — built for decisions under M365 Business Premium. Option 3 (SharePoint) is the right choice when zero extra licensing cost is the constraint.</p>
+    <div class="chosen-badge">✓ Selected Architecture — Power Apps Canvas App + SharePoint List (Zero Extra Cost)</div>
   </div>
 
   <div class="dm-wrap">
 
     <!-- option cards -->
     <div class="opt-cards">
-      <div class="opt-card chosen">
-        <div class="oc-crown">✓ CHOSEN</div>
+      <div class="opt-card not-chosen">
         <div class="oc-num">// OPTION 01</div>
-        <div class="oc-title">Power Apps →<br>Full Dataverse → Fabric</div>
-        <div class="oc-stack" style="margin-top:6px;">Canvas App · Dataverse · Zero-Copy Link · Power BI</div>
+        <div class="oc-title">Power Apps →<br>Full Dataverse</div>
+        <div class="oc-stack" style="margin-top:6px;">Canvas App · Dataverse · RLS · Power BI DirectLake</div>
       </div>
       <div class="opt-card not-chosen">
         <div class="oc-num">// OPTION 02</div>
         <div class="oc-title">Power Apps →<br>Fabric Direct Write</div>
         <div class="oc-stack" style="margin-top:6px;">Canvas App · PA HTTP · Fabric REST API · PySpark</div>
       </div>
-      <div class="opt-card not-chosen">
+      <div class="opt-card chosen">
+        <div class="oc-crown">✓ CHOSEN</div>
         <div class="oc-num">// OPTION 03</div>
-        <div class="oc-title">Power Apps →<br>SharePoint → Fabric</div>
-        <div class="oc-stack" style="margin-top:6px;">Canvas App · SharePoint Lists · PA · Fabric Pipeline</div>
+        <div class="oc-title">Power Apps →<br>SharePoint List</div>
+        <div class="oc-stack" style="margin-top:6px;">Canvas App · SharePoint Lists · PA Standard · Teams</div>
       </div>
     </div>
 
@@ -1253,8 +1205,8 @@ code {
     <div class="rec-banner">
       <div class="rb-icon">✅</div>
       <div class="rb-text">
-        <h3>Selected Architecture: Power Apps → Dataverse → Fabric</h3>
-        <p>For a <strong>PM-led, multi-project intake platform handling financial data on M365 Business Premium</strong>, Option 1 remains the right architecture — but only with the Power Apps per-user add-on (∼$20/user/month) to unlock full Dataverse. Base Business Premium ships with Dataverse for Teams only, which cannot support the Fabric zero-copy link. Option 2 requires PA Premium and introduces 30–90s submission latency. Option 3 avoids the Dataverse add-on entirely but cannot support financial-grade row-level security.</p>
+        <h3>Selected Architecture: Power Apps Canvas App → SharePoint List</h3>
+        <p>For <strong>internal intake requests (IT, HR, Facilities, General) on M365 Business Premium where no additional licensing spend is acceptable</strong>, Option 3 is the correct architecture. SharePoint is a standard connector — every M365 BP user can submit and view requests at zero extra cost. Approval flows use the standard Approvals connector. Option 1 requires a ~$20/user/month Dataverse add-on. Option 2 requires PA Premium and introduces 30–90s submission latency. For non-financial intake with standard row isolation, SharePoint is sufficient.</p>
       </div>
     </div>
 
@@ -1262,11 +1214,12 @@ code {
     <div class="mx-section">
       <div class="mx-label">01 · Licensing &amp; Cost</div>
       <table class="mxtable">
-        <thead><tr><th></th><th class="mth-g">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-b">Option 3 · SharePoint</th></tr></thead>
+        <thead><tr><th></th><th class="mth-a">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-g">Option 3 · SharePoint ✓</th></tr></thead>
         <tbody>
-          <tr><td>Included in M365 E5</td><td class="chosen-col"><span class="tag-y">✓ Fully</span></td><td><span class="tag-w">⚠ Partial</span></td><td><span class="tag-y">✓ Fully</span></td></tr>
-          <tr><td>Extra licensing required</td><td class="chosen-col"><span class="tag-y">None</span></td><td><span class="tag-n">PA Premium needed</span></td><td><span class="tag-y">None</span></td></tr>
-          <tr><td>Additional infra cost</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Zero</td><td style="color:var(--amber);">Low–Medium</td><td style="color:var(--green);font-weight:600;">Zero</td></tr>
+          <tr><td>Included in M365 BP</td><td><span class="tag-w">⚠ Add-on required</span></td><td><span class="tag-n">✗ PA Premium needed</span></td><td class="chosen-col"><span class="tag-y">✓ Fully included</span></td></tr>
+          <tr><td>Extra licensing required</td><td><span class="tag-n">~$20/user/mo (Dataverse)</span></td><td><span class="tag-n">PA Premium + Fabric SKU</span></td><td class="chosen-col"><span class="tag-y">None</span></td></tr>
+          <tr><td>Additional infra cost</td><td style="color:var(--amber);">Medium (~$20/user/mo)</td><td style="color:var(--rose);">High</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Zero</td></tr>
+          <tr><td>Standard connector (Canvas)</td><td><span class="tag-n">✗ Dataverse = Premium</span></td><td><span class="tag-n">✗ HTTP = Premium</span></td><td class="chosen-col"><span class="tag-y">✓ SharePoint = Standard</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1277,30 +1230,30 @@ code {
       <table class="mxtable">
         <tbody>
           <tr><td>Setup effort</td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:45%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">Low</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">High</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:25%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">V.Low</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">Medium</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose)">High</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:20%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">V.Low</span></div></td>
           </tr>
-          <tr><td>Skills required</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Power Platform maker</td><td style="color:var(--rose);">Data engineer + PA dev</td><td style="color:var(--green);font-weight:600;">Power Platform maker</td></tr>
-          <tr><td>Time to first submission</td><td class="chosen-col" style="color:var(--green);font-weight:600;">1–2 days</td><td style="color:var(--rose);">1–2 weeks</td><td style="color:var(--green);font-weight:600;">Half a day</td></tr>
-          <tr><td>Custom code to maintain</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Zero</td><td style="color:var(--rose);">PySpark notebook + flow</td><td style="color:var(--amber);">Flow logic only</td></tr>
+          <tr><td>Skills required</td><td style="color:var(--amber);">Power Platform + Dataverse admin</td><td style="color:var(--rose);">Data engineer + PA dev</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Power Platform maker only</td></tr>
+          <tr><td>Time to first submission</td><td style="color:var(--amber);">1–2 days</td><td style="color:var(--rose);">1–2 weeks</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Half a day</td></tr>
+          <tr><td>Custom code to maintain</td><td style="color:var(--amber);">Zero (but schema complexity)</td><td style="color:var(--rose);">PySpark notebook + flow</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Flow logic only</td></tr>
         </tbody>
       </table>
     </div>
 
     <!-- Security -->
     <div class="mx-section">
-      <div class="mx-label">03 · Security &amp; Governance (Financial Data)</div>
+      <div class="mx-label">03 · Security &amp; Governance</div>
       <table class="mxtable">
         <tbody>
-          <tr><td>Row-level security</td><td class="chosen-col"><span class="tag-y">✓ Native (Dataverse)</span></td><td><span class="tag-w">⚠ Power BI only</span></td><td><span class="tag-w">⚠ Site-level only</span></td></tr>
-          <tr><td>Write-layer validation</td><td class="chosen-col"><span class="tag-y">✓ Server-side rules</span></td><td><span class="tag-n">✗ App-side only</span></td><td><span class="tag-n">✗ App-side only</span></td></tr>
-          <tr><td>Financial field masking</td><td class="chosen-col"><span class="tag-y">✓ Native field security</span></td><td><span class="tag-n">✗ Manual build</span></td><td><span class="tag-n">✗ Not available</span></td></tr>
-          <tr><td>Native audit trail</td><td class="chosen-col"><span class="tag-y">✓ Built-in change log</span></td><td><span class="tag-w">⚠ 28-day PA history</span></td><td><span class="tag-w">⚠ SharePoint audit only</span></td></tr>
-          <tr><td>Compliance fitness</td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">Strong</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:52%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">Medium</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:35%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">Weak</span></div></td>
+          <tr><td>Row-level security</td><td><span class="tag-y">✓ Native server-side RLS</span></td><td><span class="tag-w">⚠ Power BI only</span></td><td class="chosen-col"><span class="tag-w">⚠ Item-level permissions (app-side)</span></td></tr>
+          <tr><td>Write-layer validation</td><td><span class="tag-y">✓ Server-side rules</span></td><td><span class="tag-n">✗ App-side only</span></td><td class="chosen-col"><span class="tag-n">✗ App-side only</span></td></tr>
+          <tr><td>Financial field masking</td><td><span class="tag-y">✓ Native field security</span></td><td><span class="tag-n">✗ Manual build</span></td><td class="chosen-col"><span class="tag-n">✗ Not available</span></td></tr>
+          <tr><td>Audit trail</td><td><span class="tag-y">✓ Built-in change log</span></td><td><span class="tag-w">⚠ 28-day PA history</span></td><td class="chosen-col"><span class="tag-w">⚠ SP versioning only</span></td></tr>
+          <tr><td>Suitable for financial data</td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">Strong</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">Medium</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:55%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">Internal OK</span></div></td>
           </tr>
         </tbody>
       </table>
@@ -1311,67 +1264,54 @@ code {
       <div class="mx-label">04 · Resilience &amp; Performance</div>
       <table class="mxtable">
         <tbody>
-          <tr><td>Submission response time</td><td class="chosen-col" style="color:var(--green);font-weight:600;">&lt; 2 seconds</td><td style="color:var(--rose);">30–90 sec (notebook cold start)</td><td style="color:var(--amber);">2–5 seconds</td></tr>
-          <tr><td>Write failure behaviour</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Instant retry, graceful error</td><td style="color:var(--rose);">Silent loss without fallback</td><td style="color:var(--amber);">SharePoint handles it</td></tr>
-          <tr><td>Single point of failure</td><td class="chosen-col"><span class="tag-y">Low risk</span></td><td><span class="tag-n">Client secret expiry = outage</span></td><td><span class="tag-w">Medium risk</span></td></tr>
-          <tr><td>Fabric data freshness</td><td class="chosen-col"><span class="tag-y">Near real-time (zero-copy)</span></td><td><span class="tag-y">Real-time (direct write)</span></td><td><span class="tag-w">⚠ Scheduled pipeline delay</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Fabric Integration -->
-    <div class="mx-section">
-      <div class="mx-label">05 · Fabric Integration</div>
-      <table class="mxtable">
-        <tbody>
-          <tr><td>How data reaches Fabric</td><td class="chosen-col" style="color:var(--green);font-weight:600;">Zero-copy link (no movement)</td><td style="color:var(--amber);">Direct Delta write via API</td><td style="color:var(--rose);">Pipeline push (ETL hop)</td></tr>
-          <tr><td>ETL / pipeline required</td><td class="chosen-col"><span class="tag-y">None</span></td><td><span class="tag-y">None</span></td><td><span class="tag-n">Yes — pipeline needed</span></td></tr>
-          <tr><td>Power BI mode</td><td class="chosen-col" style="color:var(--green);font-weight:600;">DirectLake</td><td style="color:var(--green);font-weight:600;">DirectLake</td><td style="color:var(--amber);">Import or DirectQuery</td></tr>
+          <tr><td>Submission response time</td><td style="color:var(--green);font-weight:600;">&lt; 2 seconds</td><td style="color:var(--rose);">30–90 sec (notebook cold start)</td><td class="chosen-col" style="color:var(--green);font-weight:600;">2–5 seconds</td></tr>
+          <tr><td>Write failure behaviour</td><td><span class="tag-y">Instant retry, graceful error</span></td><td><span class="tag-n">Silent loss without fallback</span></td><td class="chosen-col"><span class="tag-y">SharePoint handles gracefully</span></td></tr>
+          <tr><td>Single point of failure</td><td><span class="tag-y">Low risk</span></td><td><span class="tag-n">Client secret expiry = outage</span></td><td class="chosen-col"><span class="tag-w">Medium — SP dependency</span></td></tr>
         </tbody>
       </table>
     </div>
 
     <!-- Scores -->
     <div class="mx-section">
-      <div class="mx-label">06 · Overall Fit Scores</div>
+      <div class="mx-label">05 · Overall Fit Scores — M365 BP Zero-Cost Constraint</div>
       <table class="mxtable">
-        <thead><tr><th>Dimension</th><th class="mth-g">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-b">Option 3 · SharePoint</th></tr></thead>
+        <thead><tr><th>Dimension</th><th class="mth-a">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-g">Option 3 · SharePoint ✓</th></tr></thead>
         <tbody>
-          <tr><td>Licensing fit (BP + add-on)</td>
+          <tr><td>Zero-cost licensing fit</td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:40%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">4/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:20%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose)">2/10</span></div></td>
             <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">10/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:60%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">6/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">10/10</span></div></td>
-          </tr>
-          <tr><td>Security for financial data</td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">9/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:55%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">5/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:40%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">4/10</span></div></td>
           </tr>
           <tr><td>Build simplicity</td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:80%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">8/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:30%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">3/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">9/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:70%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">7/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:30%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose)">3/10</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">9/10</span></div></td>
+          </tr>
+          <tr><td>Security (internal intake)</td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">9/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose)">5/10</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:70%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">7/10</span></div></td>
           </tr>
           <tr><td>Resilience</td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">9/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">5/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:70%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">7/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">9/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose)">5/10</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:70%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">7/10</span></div></td>
           </tr>
-          <tr><td>Fabric integration quality</td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:100%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">10/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:80%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">8/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:50%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">5/10</span></div></td>
-          </tr>
-          <tr><td>Multi-project scalability</td>
+          <tr><td>Time to go-live</td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:65%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">6/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:20%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose)">2/10</span></div></td>
             <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:95%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">9/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:75%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">7/10</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:60%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue)">6/10</span></div></td>
+          </tr>
+          <tr><td>Scale per request type</td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:90%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber)">9/10</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:70%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose)">7/10</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:75%;background:var(--green)"></div></div><span class="sval" style="color:var(--green)">7/10</span></div></td>
           </tr>
           <tr style="border-top:2px solid var(--border2);">
-            <td><strong>Total (weighted)</strong></td>
-            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:93%;background:var(--green)"></div></div><span class="sval" style="color:var(--green);font-weight:700;font-size:13px;">51/60</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:57%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber);font-weight:700;font-size:13px;">30/60</span></div></td>
-            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:68%;background:var(--blue)"></div></div><span class="sval" style="color:var(--blue);font-weight:700;font-size:13px;">41/60</span></div></td>
+            <td><strong>Total (zero-cost constraint)</strong></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:73%;background:var(--amber)"></div></div><span class="sval" style="color:var(--amber);font-weight:700;font-size:13px;">44/60</span></div></td>
+            <td><div class="sbar"><div class="strack"><div class="sfill" style="width:40%;background:var(--rose)"></div></div><span class="sval" style="color:var(--rose);font-weight:700;font-size:13px;">24/60</span></div></td>
+            <td class="chosen-col"><div class="sbar"><div class="strack"><div class="sfill" style="width:82%;background:var(--green)"></div></div><span class="sval" style="color:var(--green);font-weight:700;font-size:13px;">49/60</span></div></td>
           </tr>
         </tbody>
       </table>
@@ -1379,26 +1319,20 @@ code {
 
     <!-- Risk register -->
     <div class="mx-section">
-      <div class="mx-label">07 · Risk Register</div>
+      <div class="mx-label">06 · Risk Register</div>
       <table class="mxtable">
-        <thead><tr><th>Risk</th><th class="mth-g">Option 1</th><th class="mth-a">Option 2</th><th class="mth-b">Option 3</th></tr></thead>
+        <thead><tr><th>Risk</th><th class="mth-a">Option 1 · Dataverse</th><th class="mth-a">Option 2 · Fabric Direct</th><th class="mth-g">Option 3 · SharePoint ✓</th></tr></thead>
         <tbody>
-          <tr><td>Dataverse for Teams used by mistake</td><td class="chosen-col"><span class="tag-n">🔴 Critical — blocks Fabric link entirely</span></td><td>N/A</td><td>N/A</td></tr>
-          <tr><td>Power Apps per-user add-on missing</td><td class="chosen-col"><span class="tag-n">🔴 Critical — full Dataverse unavailable</span></td><td>N/A</td><td><span class="tag-y">Not applicable</span></td></tr>
-          <tr><td>300-user cap exceeded</td><td class="chosen-col"><span class="tag-w">🟠 Monitor — plan E3/E5 migration</span></td><td><span class="tag-w">🟠 Same</span></td><td><span class="tag-w">🟠 Same</span></td></tr>
-          <tr><td>PA Premium license blocker</td><td class="chosen-col"><span class="tag-y">Not applicable</span></td><td><span class="tag-n">🔴 Critical</span></td><td><span class="tag-y">Not applicable</span></td></tr>
-          <tr><td>Slow submission UX</td><td class="chosen-col"><span class="tag-y">Low risk</span></td><td><span class="tag-n">🔴 30–90s latency</span></td><td><span class="tag-y">Low risk</span></td></tr>
-          <tr><td>Financial data bypass</td><td class="chosen-col"><span class="tag-y">Server-side rules</span></td><td><span class="tag-w">🟠 App-side only</span></td><td><span class="tag-w">🟠 App-side only</span></td></tr>
-          <tr><td>Auth credential expiry outage</td><td class="chosen-col"><span class="tag-y">Not applicable</span></td><td><span class="tag-n">🟠 Client secret expires</span></td><td><span class="tag-y">Low risk</span></td></tr>
-          <tr><td>Data loss on write failure</td><td class="chosen-col"><span class="tag-y">Very low</span></td><td><span class="tag-w">🟠 Without fallback queue</span></td><td><span class="tag-y">Low</span></td></tr>
-          <tr><td>Audit compliance gap</td><td class="chosen-col"><span class="tag-y">None — native log</span></td><td><span class="tag-w">🟠 28-day PA history only</span></td><td><span class="tag-w">🟡 SharePoint audit only</span></td></tr>
-          <tr><td>Financial field-level exposure</td><td class="chosen-col"><span class="tag-y">Protected natively</span></td><td><span class="tag-w">🟠 Manual only</span></td><td><span class="tag-n">🔴 No field masking</span></td></tr>
+          <tr><td>Unexpected licensing cost</td><td class="chosen-col"><span class="tag-n">🔴 ~$20/user/mo add-on mandatory</span></td><td><span class="tag-n">🔴 PA Premium + Fabric SKU</span></td><td class="chosen-col"><span class="tag-y">✓ Zero — fully included</span></td></tr>
+          <tr><td>Premium connector blocked</td><td><span class="tag-n">🔴 Dataverse = premium connector</span></td><td><span class="tag-n">🔴 HTTP = premium connector</span></td><td class="chosen-col"><span class="tag-y">✓ SharePoint = standard</span></td></tr>
+          <tr><td>300-user cap exceeded</td><td><span class="tag-w">🟠 Monitor — plan E3/E5</span></td><td><span class="tag-w">🟠 Same</span></td><td class="chosen-col"><span class="tag-w">🟠 Same — SP scales to E3/E5 seamlessly</span></td></tr>
+          <tr><td>Financial data bypass</td><td><span class="tag-y">Server-side Dataverse rules</span></td><td><span class="tag-w">🟠 App-side only</span></td><td class="chosen-col"><span class="tag-w">🟠 App-side only — upgrade to Dataverse for financial</span></td></tr>
+          <tr><td>Slow submission UX</td><td><span class="tag-y">Low risk (&lt;2s)</span></td><td><span class="tag-n">🔴 30–90s notebook cold start</span></td><td class="chosen-col"><span class="tag-y">Low risk (2–5s)</span></td></tr>
+          <tr><td>Data loss on write failure</td><td><span class="tag-y">Very low</span></td><td><span class="tag-w">🟠 Silent loss without fallback</span></td><td class="chosen-col"><span class="tag-y">Low — SP is resilient</span></td></tr>
+          <tr><td>Audit compliance gap</td><td><span class="tag-y">None — native log</span></td><td><span class="tag-w">🟠 28-day PA history only</span></td><td class="chosen-col"><span class="tag-w">🟡 SP versioning + Purview Audit Standard</span></td></tr>
+          <tr><td>Build complexity blocks maker</td><td><span class="tag-w">🟠 Dataverse schema knowledge needed</span></td><td><span class="tag-n">🔴 Requires data engineer</span></td><td class="chosen-col"><span class="tag-y">✓ Any Power Platform maker can build</span></td></tr>
         </tbody>
       </table>
-    </div>
-
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink4);border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
-      // Generated for Ontario One Call · M365 Business Premium + Microsoft Fabric · Power Apps per-user add-on required for full Dataverse
     </div>
 
   </div>
@@ -1446,8 +1380,9 @@ code {
     });
   });
 </script>
-  <div style="background:var(--ink);color:rgba(255,255,255,0.35);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-align:center;padding:16px;border-top:1px solid rgba(255,255,255,0.06);">
-    <span style="color:var(--ooc);font-weight:600;">Ontario One Call</span> &nbsp;·&nbsp; M365 Business Premium + Microsoft Fabric Platform Guide &nbsp;·&nbsp; Power Apps per-user add-on required for full Dataverse and Fabric zero-copy link
-  </div>
+
+<div style="background:var(--ink);color:rgba(255,255,255,0.35);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-align:center;padding:16px;border-top:1px solid rgba(255,255,255,0.06);">
+  <span style="color:var(--ooc);font-weight:600;">M365 Business Premium</span> &nbsp;·&nbsp; Canvas App + SharePoint List Intake Platform &nbsp;·&nbsp; Zero Extra Licensing Cost &nbsp;·&nbsp; Standard Connectors Only
+</div>
 </body>
 </html>
